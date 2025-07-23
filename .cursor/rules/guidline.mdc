@@ -1,0 +1,55 @@
+---
+alwaysApply: true
+---
+
+# Coding Guidelines
+
+## Project Structure
+
+- Keep all components and pages under `/app` or `/src`
+- API routes go under `/pages/api/`
+- Use `.env.local` for API keys (e.g., `COMETCHAT_API_KEY`, `COMETCHAT_AUTH_KEY`, `BREVO_API_KEY`)
+
+## CometChat Integration
+
+- Only CometChat `Auth Key` is used on frontend for logging in users
+- CometChat `API Key` is used in backend API route to create users
+- Use `CometChatUI` from UI Kit where possible
+- Store `uid` in `localStorage` for auto-login on app refresh
+
+## Authentication Rules
+
+- On signup:
+  - Collect email + phone
+  - Send OTP using Brevo
+  - Store OTP in memory (Map or singleton)
+  - On verification, create user in CometChat (via API route)
+  - Save user `uid` in localStorage
+- On login:
+  - Verify OTP
+  - Login user to CometChat using `uid`
+
+## API Route Rules
+
+- `/api/create-cometchat-user` → Server-only, uses CometChat API Key to create user
+- `/api/send-otp` → Server-only, uses Brevo API key to send email
+- Never expose API Keys to the frontend
+
+## Styling
+
+- Use Tailwind CSS with a **light theme**
+- Primary color: soft green
+- Accent color: dark blue
+- Maintain clean, minimal layout (avoid excessive shadows or clutter)
+
+## Dev Focus
+
+- No backend DB for now
+- Prioritize working chat and calls
+- Avoid overengineering
+- MVP ≠ production, ship fast
+
+## Component Library
+
+- Use any component library that will get the job done, shadcn
+- ensure to use logos defined in assets folder to improve branding and make it more customized

@@ -1,0 +1,39 @@
+---
+alwaysApply: true
+---
+
+# Product Context
+
+NEXT is an Africa-first web super-app focused on secure messaging, voice/video calling, and future extensibility into wallets, commerce, media, and mini-apps. The MVP is being pivoted to a web platform built in **Next.js** using **CometChat** for messaging and real-time voice/video communication.
+
+## MVP Goals
+
+- Functional chat and call system usable by testers
+- Email + phone-based signup with OTP verification via Brevo
+- CometChat used for messaging, groups, user profiles, and calling
+- LocalStorage used for session persistence (storing `uid`)
+- No database or backend, except minimal API routes for:
+  - Creating CometChat users
+  - Sending email OTPs (via Brevo)
+
+## Features in Scope
+
+- Login/signup via email and phone
+- CometChat login (`uid`, `AUTH_KEY`)
+- Chat interface (CometChat UI Kit)
+- Voice and video call support
+- Light UI with green/blue theme
+
+## Tech Stack
+
+- Frontend: Next.js + Tailwind CSS
+- Messaging & calling: CometChat
+- Email: Brevo (via API route)
+- Session: LocalStorage
+- Minimal serverless backend (Next.js API)
+
+## Theme Design
+
+- Light theme
+- Primary color: soft green
+- Accent color: dark blue

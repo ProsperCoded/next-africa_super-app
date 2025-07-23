@@ -3,14 +3,14 @@ import {
   CometChatUIKit,
   UIKitSettingsBuilder,
 } from "@cometchat/chat-uikit-react";
-import CometChatApp from "../CometChat/CometChatApp";
-import { CometChatProvider } from "../CometChat/context/CometChatContext";
-import { setupLocalization } from "../CometChat/utils/utils";
+import CometChatApp from "./CometChat/CometChatApp";
+import { CometChatProvider } from "./CometChat/context/CometChatContext";
+import { setupLocalization } from "./CometChat/utils/utils";
 
 export const COMETCHAT_CONSTANTS = {
-  APP_ID: "", // Replace with your App ID
-  REGION: "", // Replace with your App Region
-  AUTH_KEY: "", // Replace with your Auth Key or leave blank if you are authenticating using Auth Token
+  APP_ID: process.env.NEXT_PUBLIC_COMETCHAT_APP_ID as string, // Replace with your App ID
+  REGION: process.env.NEXT_PUBLIC_COMETCHAT_REGION as string, // Replace with your App Region
+  AUTH_KEY: process.env.NEXT_PUBLIC_COMETCHAT_AUTH_KEY as string, // Replace with your Auth Key or leave blank if you are authenticating using Auth Token
 };
 
 // Functional Component
