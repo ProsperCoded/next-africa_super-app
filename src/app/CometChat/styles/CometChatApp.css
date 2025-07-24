@@ -17,8 +17,7 @@
   border: 1px solid var(--cometchat-border-color-default, #e8e8e8);
 
   /* Shadow-MD */
-  box-shadow:
-    0px 4px 8px -2px rgba(16, 24, 40, 0.1),
+  box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1),
     0px 2px 4px -2px rgba(16, 24, 40, 0.06);
 }
 
@@ -63,18 +62,29 @@
   position: relative;
 }
 
-.conversations-wrapper .selector-wrapper .cometchat-list .cometchat-list__header .cometchat-button {
+.conversations-wrapper
+  .selector-wrapper
+  .cometchat-list
+  .cometchat-list__header
+  .cometchat-button {
   height: fit-content;
   width: fit-content;
   padding: 0;
   background: transparent;
 }
 
-.conversations-wrapper .selector-wrapper .cometchat-list .cometchat-list__header-menu {
+.conversations-wrapper
+  .selector-wrapper
+  .cometchat-list
+  .cometchat-list__header-menu {
   top: 20px;
 }
 
-.selector-wrapper .cometchat-list .cometchat-list__header .cometchat-button .cometchat-button__icon {
+.selector-wrapper
+  .cometchat-list
+  .cometchat-list__header
+  .cometchat-button
+  .cometchat-button__icon {
   height: 24px;
   width: 24px;
 }
@@ -120,7 +130,7 @@
 }
 
 .CometChatApp .cometchat .cometchat-mentions,
-.CometChatApp .cometchat .cometchat-mentions>span {
+.CometChatApp .cometchat .cometchat-mentions > span {
   background: none;
   font: var(--cometchat-font-body-bold);
 }
@@ -148,7 +158,7 @@
   outline: none;
 }
 
-.cometchat-audio-bubble__body-wave>div:nth-child(2) {
+.cometchat-audio-bubble__body-wave > div:nth-child(2) {
   display: none;
 }
 
@@ -167,12 +177,12 @@
   align-self: center;
 }
 
-.mobileChat .MuiIconButton-root[id='screenShareButton'],
-.mobileChat .MuiIconButton-root[data-testid='cc-userlist-button'] {
+.mobileChat .MuiIconButton-root[id="screenShareButton"],
+.mobileChat .MuiIconButton-root[data-testid="cc-userlist-button"] {
   display: none;
 }
-
 .cometchat-header-wrapper__desktop .cometchat-message-header__back-button,
-.cometchat-header-wrapper__hide-back-button  .cometchat-message-header__back-button{
+.cometchat-header-wrapper__hide-back-button
+  .cometchat-message-header__back-button {
   display: none;
 }

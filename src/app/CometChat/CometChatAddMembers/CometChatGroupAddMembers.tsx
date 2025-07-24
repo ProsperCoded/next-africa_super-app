@@ -6,6 +6,7 @@ import {
   CometChatUIKitConstants,
   CometChatGroupEvents,
   CometChatUIKitLoginListener,
+  CometChatUIKitUtility,
 } from "@cometchat/chat-uikit-react";
 import "./CometChatGroupAddMembers.css";
 
@@ -45,11 +46,16 @@ export const CometChatGroupAddMembers: React.FC<
         const users = await searchRequest.fetchNext();
 
         // Filter out users who are already in the group
-        const groupMembers = await CometChat.getGroupMembers(
-          group.getGuid(),
-          100
+        const groupMembersRequest = new CometChat.GroupMembersRequestBuilder(
+          group.getGuid()
+        )
+          .setLimit(100)
+          .build();
+
+        const groupMembers = await groupMembersRequest.fetchNext();
+        const memberUIDs = groupMembers.map((member: CometChat.GroupMember) =>
+          member.getUid()
         );
-        const memberUIDs = groupMembers.map((member) => member.getUid());
         const availableUsers = users.filter(
           (user) => !memberUIDs.includes(user.getUid())
         );
@@ -82,6 +88,37 @@ export const CometChatGroupAddMembers: React.FC<
     });
   };
 
+  // Create action message for member addition
+  const createActionMessage = useCallback(
+    (
+      actionOn: CometChat.GroupMember,
+      loggedInUser: CometChat.User,
+      group: CometChat.Group
+    ): CometChat.Action => {
+      const actionMessage = new CometChat.Action(
+        group.getGuid(),
+        CometChatUIKitConstants.MessageTypes.groupMember,
+        CometChatUIKitConstants.MessageReceiverType.group,
+        CometChatUIKitConstants.MessageCategory
+          .action as CometChat.MessageCategory
+      );
+      actionMessage.setAction(CometChatUIKitConstants.groupMemberAction.ADDED);
+      actionMessage.setActionBy(CometChatUIKitUtility.clone(loggedInUser));
+      actionMessage.setActionFor(CometChatUIKitUtility.clone(group));
+      actionMessage.setActionOn(CometChatUIKitUtility.clone(actionOn));
+      actionMessage.setReceiver(CometChatUIKitUtility.clone(group));
+      actionMessage.setSender(CometChatUIKitUtility.clone(loggedInUser));
+      actionMessage.setConversationId("group_" + group.getGuid());
+      actionMessage.setMuid(CometChatUIKitUtility.ID());
+      actionMessage.setMessage(
+        `${loggedInUser.getName()} added ${actionOn.getUid()}`
+      );
+      actionMessage.setSentAt(CometChatUIKitUtility.getUnixTimestamp());
+      return actionMessage;
+    },
+    []
+  );
+
   const handleAddMembers = async () => {
     if (selectedUsers.length === 0) return;
 
@@ -100,19 +137,49 @@ export const CometChatGroupAddMembers: React.FC<
       });
 
       // Add members to the group
-      await CometChat.addMembersToGroup(group.getGuid(), groupMembers, []);
+      const response = await CometChat.addMembersToGroup(
+        group.getGuid(),
+        groupMembers,
+        []
+      );
 
-      // Emit group member added events
-      selectedUsers.forEach((user) => {
-        const loggedInUser = CometChatUIKitLoginListener.getLoggedInUser();
+      // Filter successfully added members
+      const UIDsToRemove: Set<string> = new Set();
+      if (response) {
+        for (const key in response) {
+          if ((response as any)[key] === "success") {
+            UIDsToRemove.add(key);
+          }
+        }
+      }
+
+      const addedMembers: CometChat.GroupMember[] = [];
+      for (let i = 0; i < groupMembers.length; i++) {
+        const curMember = groupMembers[i];
+        if (UIDsToRemove.has(curMember.getUid())) {
+          addedMembers.push(curMember);
+        }
+      }
+
+      // Emit group member added events with correct interface
+      const loggedInUser = CometChatUIKitLoginListener.getLoggedInUser();
+      if (loggedInUser && addedMembers.length > 0) {
+        const groupClone = CometChatUIKitUtility.clone(group);
+        groupClone.setMembersCount(
+          group.getMembersCount() + addedMembers.length
+        );
+
         setTimeout(() => {
           CometChatGroupEvents.ccGroupMemberAdded.next({
-            group: group,
-            addedBy: loggedInUser!,
-            userAdded: user,
+            messages: addedMembers.map((addedMember) =>
+              createActionMessage(addedMember, loggedInUser, groupClone)
+            ),
+            usersAdded: addedMembers,
+            userAddedIn: groupClone,
+            userAddedBy: CometChatUIKitUtility.clone(loggedInUser),
           });
         }, 100);
-      });
+      }
 
       setShowSuccess(true);
 
