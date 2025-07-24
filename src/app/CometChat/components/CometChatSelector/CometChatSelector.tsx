@@ -75,6 +75,7 @@ const CometChatSelector = (props: SelectorProps) => {
   } = props;
 
   const [loggedInUser, setLoggedInUser] = useState<CometChat.User | null>();
+  const [showOptionsMenu, setShowOptionsMenu] = useState(false);
   const { setAppState } = useContext(AppContext);
   const { chatFeatures, callFeatures } = useCometChatContext();
   const getLoggedInUser = CometChatUIKitLoginListener.getLoggedInUser();
@@ -156,7 +157,7 @@ const CometChatSelector = (props: SelectorProps) => {
           (loggedInUser && loggedInUser.getName()) ||
           "User",
         iconURL: userIcon,
-        subtitle: currentUserData?.email || "",
+        // subtitle: currentUserData?.email || "",
         onClick: () => {
           // Could open user profile or settings
         },
@@ -166,7 +167,7 @@ const CometChatSelector = (props: SelectorProps) => {
         id: "divider-1",
         title: "",
         iconURL: "",
-        divider: true,
+        // divider: true,
       }),
       new CometChatOption({
         id: "create-conversation",
@@ -174,6 +175,7 @@ const CometChatSelector = (props: SelectorProps) => {
         iconURL: chatIcon,
         onClick: () => {
           onNewChatClicked();
+          setShowOptionsMenu(false);
         },
       }),
       new CometChatOption({
@@ -182,6 +184,7 @@ const CometChatSelector = (props: SelectorProps) => {
         iconURL: userIcon,
         onClick: () => {
           onAddContactClicked();
+          setShowOptionsMenu(false);
         },
       }),
       new CometChatOption({
@@ -190,6 +193,7 @@ const CometChatSelector = (props: SelectorProps) => {
         iconURL: createGroupIcon,
         onClick: () => {
           onFindGroupsClicked();
+          setShowOptionsMenu(false);
         },
       }),
       // Divider
@@ -197,7 +201,7 @@ const CometChatSelector = (props: SelectorProps) => {
         id: "divider-2",
         title: "",
         iconURL: "",
-        divider: true,
+        // divider: true,
       }),
       new CometChatOption({
         id: "log-out",
@@ -205,6 +209,7 @@ const CometChatSelector = (props: SelectorProps) => {
         iconURL: logoutIcon,
         onClick: () => {
           logOut();
+          setShowOptionsMenu(false);
         },
       }),
     ];
@@ -235,61 +240,138 @@ const CometChatSelector = (props: SelectorProps) => {
             }}
             iconURL={chatIcon}
             text="New"
-            style={{
-              background: "var(--color-primary)",
-              color: "white",
-              borderRadius: "20px",
-              padding: "6px 12px",
-              fontSize: "12px",
-              fontWeight: "500",
-              border: "none",
-              marginRight: "8px",
-            }}
           />
-          <CometChatContextMenu
-            closeOnOutsideClick={true}
-            placement={Placement.left}
-            data={getOptions() as CometChatOption[]}
-            topMenuSize={1}
-            onOptionClicked={(e: CometChatOption) => {
-              const { onClick } = e;
-              if (onClick) {
-                onClick();
-              }
-            }}
-            moreIconURL=""
-            customIcon={
+
+          {/* Custom Options Menu */}
+          <div style={{ position: "relative" }}>
+            <div
+              onClick={() => setShowOptionsMenu(!showOptionsMenu)}
+              style={{
+                width: "32px",
+                height: "32px",
+                background: "var(--color-primary)",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                color: "white",
+              }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="1" />
+                <circle cx="12" cy="5" r="1" />
+                <circle cx="12" cy="19" r="1" />
+              </svg>
+            </div>
+
+            {/* Dropdown Menu */}
+            {showOptionsMenu && (
               <div
                 style={{
-                  width: "32px",
-                  height: "32px",
-                  background: "var(--color-primary)",
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  color: "white",
+                  position: "absolute",
+                  top: "40px",
+                  right: "0",
+                  backgroundColor: "white",
+                  border:
+                    "1px solid var(--cometchat-border-color-default, #e8e8e8)",
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                  minWidth: "200px",
+                  zIndex: 1000,
                 }}
               >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <circle cx="12" cy="12" r="1" />
-                  <circle cx="12" cy="5" r="1" />
-                  <circle cx="12" cy="19" r="1" />
-                </svg>
+                {getOptions()
+                  .filter(
+                    (option) =>
+                      option.id !== "divider-1" && option.id !== "divider-2"
+                  )
+                  .map((option) => (
+                    <div
+                      key={option.id}
+                      onClick={() => {
+                        const { onClick } = option;
+                        if (onClick) {
+                          onClick();
+                        }
+                      }}
+                      style={{
+                        padding: "12px 16px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "12px",
+                        borderBottom:
+                          option.id === "logged-in-user"
+                            ? "1px solid var(--cometchat-border-color-light, #f5f5f5)"
+                            : "none",
+                        color:
+                          option.id === "log-out"
+                            ? "var(--cometchat-error-color, #f44649)"
+                            : "var(--cometchat-text-color-primary, #141414)",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor =
+                          "var(--cometchat-background-color-02, #f9f9f9)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = "transparent";
+                      }}
+                    >
+                      {option.iconURL && (
+                        <img
+                          src={option.iconURL}
+                          alt=""
+                          style={{
+                            width: "20px",
+                            height: "20px",
+                            filter:
+                              option.id === "log-out"
+                                ? "brightness(0) saturate(100%) invert(25%) sepia(94%) saturate(3086%) hue-rotate(342deg) brightness(97%) contrast(94%)"
+                                : "none",
+                          }}
+                        />
+                      )}
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          fontWeight:
+                            option.id === "logged-in-user" ? "500" : "400",
+                        }}
+                      >
+                        {option.title}
+                      </span>
+                    </div>
+                  ))}
               </div>
-            }
-          />
+            )}
+          </div>
         </div>
       </div>
     );
   };
+
+  // Add click outside handler to close menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (
+        showOptionsMenu &&
+        !target.closest(".cometchat-conversations-header__actions")
+      ) {
+        setShowOptionsMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showOptionsMenu]);
 
   const groupsHeaderView = () => {
     return (

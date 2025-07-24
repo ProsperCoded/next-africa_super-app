@@ -371,6 +371,22 @@
   box-shadow: 0 4px 12px rgba(0, 244, 94, 0.25);
 }
 
+/* Style the "New" button specifically */
+.cometchat-conversations-header .cometchat-button {
+  background: var(--color-primary, #00f45e) !important;
+  color: white !important;
+  border-radius: 20px !important;
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  border: none !important;
+  margin-right: 8px !important;
+}
+
+.cometchat-conversations-header .cometchat-button:hover {
+  background: var(--color-primary, #00f45e) dd !important;
+}
+
 /* Custom context menu trigger */
 .cometchat-context-menu__trigger {
   transition: all 0.2s ease;
