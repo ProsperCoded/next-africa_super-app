@@ -1,20 +1,72 @@
 @import "tailwindcss";
 
 :root {
+  /* Light theme colors */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111827;
   --text-primary: #111827;
   --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
   --text-placeholder: #9ca3af;
+
+  /* Brand colors */
+  --color-primary: #00f45e;
+  --color-primary-hover: #00d651;
+  --color-primary-light: #f0fdf4;
+  --color-secondary: #05023b;
+  --color-secondary-light: #f8fafc;
+
+  /* Background colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+
+  /* Border colors */
+  --border-light: #e5e7eb;
+  --border-medium: #d1d5db;
+  --border-dark: #9ca3af;
+
+  /* Status colors */
+  --color-success: #00f45e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* Shadow colors */
+  --shadow-soft: rgba(0, 0, 0, 0.04);
+  --shadow-medium: rgba(0, 0, 0, 0.08);
+  --shadow-strong: rgba(0, 0, 0, 0.12);
+  --shadow-primary: rgba(0, 244, 94, 0.15);
+  --shadow-secondary: rgba(5, 2, 59, 0.15);
 }
 
 @theme inline {
+  /* Tailwind theme customization */
+  --color-primary-500: var(--color-primary);
+  --color-primary-600: var(--color-primary-hover);
+  --color-primary-50: var(--color-primary-light);
+  --color-secondary-900: var(--color-secondary);
+  --color-secondary-50: var(--color-secondary-light);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-text-tertiary: var(--text-tertiary);
+
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+
+  --color-border-light: var(--border-light);
+  --color-border-medium: var(--border-medium);
+  --color-border-dark: var(--border-dark);
+
+  --color-success-500: var(--color-success);
+  --color-warning-500: var(--color-warning);
+  --color-error-500: var(--color-error);
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "Fira Code", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,34 +75,246 @@
     --foreground: #ededed;
     --text-primary: #ffffff;
     --text-secondary: #d1d5db;
-    --text-placeholder: #9ca3af;
+    --text-tertiary: #9ca3af;
+    --text-placeholder: #6b7280;
+
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111827;
+    --bg-tertiary: #1f2937;
+
+    --border-light: #374151;
+    --border-medium: #4b5563;
+    --border-dark: #6b7280;
+
+    --shadow-soft: rgba(0, 0, 0, 0.2);
+    --shadow-medium: rgba(0, 0, 0, 0.3);
+    --shadow-strong: rgba(0, 0, 0, 0.4);
   }
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Ensure all inputs have proper text color with maximum specificity */
+/* Focus styles */
+*:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Button focus */
+button:focus,
+[role="button"]:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Input and form element styles */
 input,
 textarea,
-select,
-.cometchat-add-contact-modal input,
-.cometchat-add-contact-overlay input,
-div input,
-[class*="cometchat"] input {
-  color: #111827 !important;
-  -webkit-text-fill-color: #111827 !important;
+select {
+  color: var(--text-primary) !important;
+  background-color: var(--bg-primary) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  -webkit-text-fill-color: var(--text-primary) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px var(--shadow-primary) !important;
 }
 
 input::placeholder,
-textarea::placeholder,
-.cometchat-add-contact-modal input::placeholder,
-.cometchat-add-contact-overlay input::placeholder,
-div input::placeholder,
-[class*="cometchat"] input::placeholder {
-  color: #6b7280 !important;
+textarea::placeholder {
+  color: var(--text-placeholder) !important;
   opacity: 1 !important;
+}
+
+/* CometChat specific input fixes */
+.cometchat-add-contact-modal input,
+.cometchat-add-contact-overlay input,
+.cometchat-find-groups-modal input,
+.cometchat-group-add-members-modal input,
+div input,
+[class*="cometchat"] input {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  background-color: var(--bg-primary) !important;
+}
+
+[class*="cometchat"] input::placeholder {
+  color: var(--text-placeholder) !important;
+  opacity: 1 !important;
+}
+
+/* Button styles */
+.btn {
+  @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.btn-primary {
+  @apply bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
+}
+
+.btn-secondary {
+  @apply bg-secondary-900 text-white hover:bg-secondary-800 focus:ring-secondary-900;
+}
+
+.btn-outline {
+  @apply border border-border-medium text-text-primary hover:bg-bg-secondary focus:ring-primary-500;
+}
+
+/* Card styles */
+.card {
+  @apply bg-bg-primary border border-border-light rounded-xl shadow-soft;
+}
+
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-medium hover:border-border-medium;
+}
+
+/* Text styles */
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Utility classes */
+.shadow-primary {
+  box-shadow: 0 4px 16px var(--shadow-primary);
+}
+
+.shadow-secondary {
+  box-shadow: 0 4px 16px var(--shadow-secondary);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Loading states */
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Dark mode specific overrides */
+@media (prefers-color-scheme: dark) {
+  .loading::after {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+  }
 }
