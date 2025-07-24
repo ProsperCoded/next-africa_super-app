@@ -1,4 +1,4 @@
-.cometchat-add-contact-overlay {
+.cometchat-find-groups-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   padding: 20px;
 }
 
-.cometchat-add-contact-modal {
+.cometchat-find-groups-modal {
   background: white;
   border-radius: 12px;
   width: 100%;
@@ -34,7 +34,7 @@
   }
 }
 
-.cometchat-add-contact-header {
+.cometchat-find-groups-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -42,14 +42,14 @@
   border-bottom: 1px solid #e5e7eb;
 }
 
-.cometchat-add-contact-title {
+.cometchat-find-groups-title {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
   color: #111827;
 }
 
-.cometchat-add-contact-close {
+.cometchat-find-groups-close {
   background: none;
   border: none;
   color: #6b7280;
@@ -59,18 +59,18 @@
   transition: all 0.2s;
 }
 
-.cometchat-add-contact-close:hover {
+.cometchat-find-groups-close:hover {
   background-color: #f3f4f6;
   color: #374151;
 }
 
-.cometchat-add-contact-content {
+.cometchat-find-groups-content {
   padding: 24px;
   max-height: 60vh;
   overflow-y: auto;
 }
 
-.cometchat-add-contact-search label {
+.cometchat-find-groups-search label {
   display: block;
   font-size: 14px;
   font-weight: 500;
@@ -78,9 +78,9 @@
   margin-bottom: 8px;
 }
 
-.cometchat-add-contact-modal .cometchat-add-contact-input,
-.cometchat-add-contact-input,
-input.cometchat-add-contact-input {
+.cometchat-find-groups-modal .cometchat-find-groups-input,
+.cometchat-find-groups-input,
+input.cometchat-find-groups-input {
   width: 100% !important;
   padding: 12px 16px !important;
   border: 1px solid #d1d5db !important;
@@ -93,16 +93,16 @@ input.cometchat-add-contact-input {
   -webkit-text-fill-color: #111827 !important;
 }
 
-.cometchat-add-contact-modal .cometchat-add-contact-input::placeholder,
-.cometchat-add-contact-input::placeholder,
-input.cometchat-add-contact-input::placeholder {
+.cometchat-find-groups-modal .cometchat-find-groups-input::placeholder,
+.cometchat-find-groups-input::placeholder,
+input.cometchat-find-groups-input::placeholder {
   color: #6b7280 !important;
   opacity: 1 !important;
 }
 
-.cometchat-add-contact-modal .cometchat-add-contact-input:focus,
-.cometchat-add-contact-input:focus,
-input.cometchat-add-contact-input:focus {
+.cometchat-find-groups-modal .cometchat-find-groups-input:focus,
+.cometchat-find-groups-input:focus,
+input.cometchat-find-groups-input:focus {
   outline: none !important;
   border-color: #00f45e !important;
   box-shadow: 0 0 0 3px rgba(0, 244, 94, 0.1) !important;
@@ -110,11 +110,11 @@ input.cometchat-add-contact-input:focus {
   -webkit-text-fill-color: #111827 !important;
 }
 
-.cometchat-add-contact-results {
+.cometchat-find-groups-results {
   margin-top: 24px;
 }
 
-.cometchat-add-contact-loading {
+.cometchat-find-groups-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,7 +122,7 @@ input.cometchat-add-contact-input:focus {
   color: #6b7280;
 }
 
-.cometchat-add-contact-spinner {
+.cometchat-find-groups-spinner {
   width: 32px;
   height: 32px;
   border: 3px solid #f3f4f6;
@@ -141,42 +141,41 @@ input.cometchat-add-contact-input:focus {
   }
 }
 
-.cometchat-add-contact-empty {
+.cometchat-find-groups-empty {
   text-align: center;
   padding: 32px;
   color: #6b7280;
 }
 
-.cometchat-add-contact-empty-hint {
+.cometchat-find-groups-empty-hint {
   font-size: 12px;
   margin-top: 8px;
   color: #9ca3af;
 }
 
-.cometchat-add-contact-list h4 {
+.cometchat-find-groups-list h4 {
   margin: 0 0 16px 0;
   font-size: 14px;
   font-weight: 600;
   color: #374151;
 }
 
-.cometchat-add-contact-user {
+.cometchat-find-groups-group {
   display: flex;
   align-items: center;
   padding: 12px;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   margin-bottom: 8px;
-  cursor: pointer;
   transition: all 0.2s;
 }
 
-.cometchat-add-contact-user:hover {
+.cometchat-find-groups-group:hover {
   background-color: #f9fafb;
   border-color: #00f45e;
 }
 
-.cometchat-add-contact-user-avatar {
+.cometchat-find-groups-group-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -185,18 +184,18 @@ input.cometchat-add-contact-input:focus {
   flex-shrink: 0;
 }
 
-.cometchat-add-contact-user-avatar img {
+.cometchat-find-groups-group-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.cometchat-add-contact-user-info {
+.cometchat-find-groups-group-info {
   flex: 1;
   min-width: 0;
 }
 
-.cometchat-add-contact-user-info h5 {
+.cometchat-find-groups-group-info h5 {
   margin: 0 0 4px 0;
   font-size: 14px;
   font-weight: 500;
@@ -206,29 +205,22 @@ input.cometchat-add-contact-input:focus {
   text-overflow: ellipsis;
 }
 
-.cometchat-add-contact-user-info p {
-  margin: 0;
+.cometchat-find-groups-group-info p {
+  margin: 0 0 4px 0;
   font-size: 12px;
   color: #6b7280;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.cometchat-add-contact-user-status {
+.cometchat-find-groups-group-type {
   font-size: 10px;
   padding: 2px 6px;
   border-radius: 10px;
-  margin-top: 4px;
+  background-color: #e0f2fe;
+  color: #0369a1;
   display: inline-block;
 }
 
-.cometchat-add-contact-user-status.online {
-  background-color: #d1fae5;
-  color: #065f46;
-}
-
-.cometchat-add-contact-add-btn {
+.cometchat-find-groups-join-btn {
   background-color: #00f45e;
   color: white;
   border: none;
@@ -239,36 +231,59 @@ input.cometchat-add-contact-input:focus {
   cursor: pointer;
   transition: all 0.2s;
   flex-shrink: 0;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.cometchat-add-contact-add-btn:hover {
+.cometchat-find-groups-join-btn:hover:not(:disabled) {
   background-color: #00d651;
 }
 
-.cometchat-add-contact-instructions {
+.cometchat-find-groups-join-btn.joined {
+  background-color: #10b981;
+  cursor: default;
+}
+
+.cometchat-find-groups-join-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.cometchat-find-groups-btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.cometchat-find-groups-instructions {
   text-align: center;
   padding: 32px 16px;
   color: #6b7280;
 }
 
-.cometchat-add-contact-instructions-icon {
+.cometchat-find-groups-instructions-icon {
   margin-bottom: 16px;
 }
 
-.cometchat-add-contact-instructions h3 {
+.cometchat-find-groups-instructions h3 {
   margin: 0 0 12px 0;
   font-size: 16px;
   font-weight: 600;
   color: #374151;
 }
 
-.cometchat-add-contact-instructions p {
+.cometchat-find-groups-instructions p {
   margin: 0 0 16px 0;
   font-size: 14px;
   line-height: 1.5;
 }
 
-.cometchat-add-contact-instructions ul {
+.cometchat-find-groups-instructions ul {
   text-align: left;
   max-width: 280px;
   margin: 0 auto;
@@ -276,14 +291,14 @@ input.cometchat-add-contact-input:focus {
   list-style: none;
 }
 
-.cometchat-add-contact-instructions li {
+.cometchat-find-groups-instructions li {
   font-size: 12px;
   margin-bottom: 6px;
   padding-left: 16px;
   position: relative;
 }
 
-.cometchat-add-contact-instructions li::before {
+.cometchat-find-groups-instructions li::before {
   content: "•";
   color: #00f45e;
   font-weight: bold;
@@ -291,30 +306,30 @@ input.cometchat-add-contact-input:focus {
   left: 0;
 }
 
-.cometchat-add-contact-success {
+.cometchat-find-groups-success {
   padding: 32px 24px;
   text-align: center;
 }
 
-.cometchat-add-contact-success-icon {
+.cometchat-find-groups-success-icon {
   margin-bottom: 16px;
 }
 
-.cometchat-add-contact-success h3 {
+.cometchat-find-groups-success h3 {
   margin: 0 0 12px 0;
   font-size: 18px;
   font-weight: 600;
   color: #065f46;
 }
 
-.cometchat-add-contact-success p {
+.cometchat-find-groups-success p {
   margin: 0 0 12px 0;
   font-size: 14px;
   color: #374151;
   line-height: 1.5;
 }
 
-.cometchat-add-contact-hint {
+.cometchat-find-groups-hint {
   background-color: #f0fdf4;
   border: 1px solid #bbf7d0;
   border-radius: 8px;
@@ -324,6 +339,6 @@ input.cometchat-add-contact-input:focus {
   color: #166534;
 }
 
-.cometchat-add-contact-hint strong {
+.cometchat-find-groups-hint strong {
   font-weight: 600;
 }

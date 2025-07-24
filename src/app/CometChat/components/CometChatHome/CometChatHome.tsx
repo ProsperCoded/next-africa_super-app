@@ -42,6 +42,7 @@ import { CometChatUserDetails } from "../CometChatDetails/CometChatUserDetails";
 import { CometChatThreadedMessages } from "../CometChatDetails/CometChatThreadedMessages";
 import { CometChatCallDetails } from "../CometChatCallLog/CometChatCallLogDetails";
 import { CometChatAddContact } from "../CometChatAddContact/CometChatAddContact";
+import { CometChatFindGroups } from "../../CometChatFindGroups/CometChatFindGroups";
 import { CometChatAlertPopup } from "../CometChatAlertPopup/CometChatAlertPopup";
 import {
   CometChatAvatar,
@@ -96,6 +97,7 @@ function CometChatHome({ defaultUser, defaultGroup }: CometChatHomeProps) {
   >();
   const [showNewChat, setShowNewChat] = useState<boolean>(false);
   const [showAddContact, setShowAddContact] = useState<boolean>(false);
+  const [showFindGroups, setShowFindGroups] = useState<boolean>(false);
   const showJoinGroupRef = useRef(false);
   const [newChat, setNewChat] = useState<
     | {
@@ -131,6 +133,28 @@ function CometChatHome({ defaultUser, defaultGroup }: CometChatHomeProps) {
   // Handler for opening Add Contact modal
   const onAddContactClicked = useCallback(() => {
     setShowAddContact(true);
+    setAppState({
+      type: "updateSideComponent",
+      payload: { type: "", visible: false },
+    });
+  }, [setAppState]);
+
+  // Handle when a group is joined via the Find Groups modal
+  const handleGroupJoined = useCallback(
+    (group: CometChat.Group) => {
+      console.log("Group joined:", group.getName());
+      toastTextRef.current = `Successfully joined ${group.getName()}! Go to Groups tab to start chatting.`;
+      setShowToast(true);
+      // Update the selected item to the newly joined group
+      setSelectedItem(group);
+      setAppState({ type: "updateSelectedItemGroup", payload: group });
+    },
+    [setAppState]
+  );
+
+  // Handler for opening Find Groups modal
+  const onFindGroupsClicked = useCallback(() => {
+    setShowFindGroups(true);
     setAppState({
       type: "updateSideComponent",
       payload: { type: "", visible: false },
@@ -2129,6 +2153,7 @@ function CometChatHome({ defaultUser, defaultGroup }: CometChatHomeProps) {
                   });
                 }}
                 onAddContactClicked={onAddContactClicked}
+                onFindGroupsClicked={onFindGroupsClicked}
                 onGroupCreated={(group) => setSelectedItem(group)}
                 hideCreateGroupButton={
                   chatFeatures && !chatFeatures.groupManagement.createGroup
@@ -2152,6 +2177,13 @@ function CometChatHome({ defaultUser, defaultGroup }: CometChatHomeProps) {
           isOpen={showAddContact}
           onClose={() => setShowAddContact(false)}
           onContactAdded={handleContactAdded}
+        />
+
+        {/* Find Groups Modal */}
+        <CometChatFindGroups
+          isOpen={showFindGroups}
+          onClose={() => setShowFindGroups(false)}
+          onGroupJoined={handleGroupJoined}
         />
       </div>
     )

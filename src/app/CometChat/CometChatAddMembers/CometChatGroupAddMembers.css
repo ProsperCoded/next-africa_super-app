@@ -1,0 +1,413 @@
+.cometchat-group-add-members-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.cometchat-group-add-members-modal {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: slideIn 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.cometchat-group-add-members-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.cometchat-group-add-members-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cometchat-group-add-members-close {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.cometchat-group-add-members-close:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.cometchat-group-add-members-content {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.cometchat-group-add-members-search label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.cometchat-group-add-members-modal .cometchat-group-add-members-input,
+.cometchat-group-add-members-input,
+input.cometchat-group-add-members-input {
+  width: 100% !important;
+  padding: 12px 16px !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  transition: all 0.2s !important;
+  box-sizing: border-box !important;
+  color: #111827 !important;
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+.cometchat-group-add-members-input:focus {
+  outline: none !important;
+  border-color: #00f45e !important;
+  box-shadow: 0 0 0 3px rgba(0, 244, 94, 0.1) !important;
+}
+
+.cometchat-group-add-members-selected {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+}
+
+.cometchat-group-add-members-selected h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #166534;
+}
+
+.cometchat-group-add-members-selected-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cometchat-group-add-members-selected-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.cometchat-group-add-members-selected-user img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.cometchat-group-add-members-selected-user button {
+  background: none;
+  border: none;
+  color: #dc2626;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.cometchat-group-add-members-results {
+  margin-top: 24px;
+}
+
+.cometchat-group-add-members-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  color: #6b7280;
+}
+
+.cometchat-group-add-members-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid #00f45e;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.cometchat-group-add-members-empty {
+  text-align: center;
+  padding: 32px;
+  color: #6b7280;
+}
+
+.cometchat-group-add-members-empty-hint {
+  font-size: 12px;
+  margin-top: 8px;
+  color: #9ca3af;
+}
+
+.cometchat-group-add-members-list h4 {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.cometchat-group-add-members-user {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cometchat-group-add-members-user:hover {
+  background-color: #f9fafb;
+  border-color: #00f45e;
+}
+
+.cometchat-group-add-members-user.selected {
+  background-color: #f0fdf4;
+  border-color: #00f45e;
+}
+
+.cometchat-group-add-members-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.cometchat-group-add-members-user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cometchat-group-add-members-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cometchat-group-add-members-user-info h5 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cometchat-group-add-members-user-info p {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.cometchat-group-add-members-user-status {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.cometchat-group-add-members-user-status.online {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.cometchat-group-add-members-user-checkbox {
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.cometchat-group-add-members-user-checkbox-empty {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+}
+
+.cometchat-group-add-members-instructions {
+  text-align: center;
+  padding: 32px 16px;
+  color: #6b7280;
+}
+
+.cometchat-group-add-members-instructions-icon {
+  margin-bottom: 16px;
+}
+
+.cometchat-group-add-members-instructions h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.cometchat-group-add-members-instructions p {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.cometchat-group-add-members-instructions ul {
+  text-align: left;
+  max-width: 280px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.cometchat-group-add-members-instructions li {
+  font-size: 12px;
+  margin-bottom: 6px;
+  padding-left: 16px;
+  position: relative;
+}
+
+.cometchat-group-add-members-instructions li::before {
+  content: "•";
+  color: #00f45e;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.cometchat-group-add-members-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  flex-shrink: 0;
+}
+
+.cometchat-group-add-members-cancel-btn {
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cometchat-group-add-members-cancel-btn:hover:not(:disabled) {
+  background-color: #f3f4f6;
+}
+
+.cometchat-group-add-members-add-btn {
+  background-color: #00f45e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cometchat-group-add-members-add-btn:hover:not(:disabled) {
+  background-color: #00d651;
+}
+
+.cometchat-group-add-members-add-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.cometchat-group-add-members-btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.cometchat-group-add-members-success {
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.cometchat-group-add-members-success-icon {
+  margin-bottom: 16px;
+}
+
+.cometchat-group-add-members-success h3 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #065f46;
+}
+
+.cometchat-group-add-members-success p {
+  margin: 0;
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.5;
+}

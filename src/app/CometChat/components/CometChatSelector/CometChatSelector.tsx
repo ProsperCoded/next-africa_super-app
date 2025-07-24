@@ -51,6 +51,7 @@ interface SelectorProps {
   onHide?: () => void;
   onNewChatClicked?: () => void;
   onAddContactClicked?: () => void;
+  onFindGroupsClicked?: () => void;
   onGroupCreated?: (group: Group) => void;
   hideCreateGroupButton?: boolean;
 }
@@ -68,6 +69,7 @@ const CometChatSelector = (props: SelectorProps) => {
     onHide = () => {},
     onNewChatClicked = () => {},
     onAddContactClicked = () => {},
+    onFindGroupsClicked = () => {},
     onGroupCreated = () => {},
     hideCreateGroupButton,
   } = props;
@@ -154,6 +156,14 @@ const CometChatSelector = (props: SelectorProps) => {
         iconURL: userIcon,
         onClick: () => {
           onAddContactClicked();
+        },
+      }),
+      new CometChatOption({
+        id: "find-groups",
+        title: getLocalizedString("find_groups") || "Find Groups",
+        iconURL: createGroupIcon,
+        onClick: () => {
+          onFindGroupsClicked();
         },
       }),
       new CometChatOption({

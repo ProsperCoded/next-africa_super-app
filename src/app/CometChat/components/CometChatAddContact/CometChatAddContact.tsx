@@ -155,6 +155,11 @@ export const CometChatAddContact: React.FC<CometChatAddContactProps> = ({
                   onChange={handleSearch}
                   placeholder="Enter username, email, or phone number..."
                   className="cometchat-add-contact-input"
+                  style={{
+                    color: "#111827",
+                    backgroundColor: "#ffffff",
+                    WebkitTextFillColor: "#111827",
+                  }}
                 />
               </div>
 

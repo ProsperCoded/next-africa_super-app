@@ -33,14 +33,24 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Ensure all inputs have proper text color */
+/* Ensure all inputs have proper text color with maximum specificity */
 input,
 textarea,
-select {
-  color: var(--text-primary, #111827) !important;
+select,
+.cometchat-add-contact-modal input,
+.cometchat-add-contact-overlay input,
+div input,
+[class*="cometchat"] input {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
 }
 
 input::placeholder,
-textarea::placeholder {
-  color: var(--text-placeholder, #9ca3af) !important;
+textarea::placeholder,
+.cometchat-add-contact-modal input::placeholder,
+.cometchat-add-contact-overlay input::placeholder,
+div input::placeholder,
+[class*="cometchat"] input::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
 }

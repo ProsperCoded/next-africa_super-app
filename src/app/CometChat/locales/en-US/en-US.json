@@ -33,6 +33,8 @@
   "confirm_ownership_transfer": "Are you sure you want to transfer ownership? This can't be undone, and the new owner will take full control.",
   "add_contact": "Add Contact",
   "search_users": "Search by username, email, or phone",
+  "find_groups": "Find Groups",
+  "search_groups": "Search for public groups by name",
   "confirm_delete_and_exit": "Are you sure you want to delete this chat and exit the group? This action cannot be undone.",
   "delete_and_exit_label": "Delete & Exit",
   "group_left_and_chat_deleted": "You have left the group and chat has been deleted.",
