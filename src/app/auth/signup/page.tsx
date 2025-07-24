@@ -22,6 +22,7 @@ export default function Signup() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [emailExists, setEmailExists] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,6 +31,7 @@ export default function Signup() {
       [name]: value,
     }));
     if (error) setError("");
+    if (name === "email" && emailExists) setEmailExists(false);
   };
 
   const formatPhoneNumber = (value: string) => {
@@ -75,6 +77,37 @@ export default function Signup() {
     setError("");
 
     try {
+      // First, check if email already exists
+      console.log("Checking if email exists before signup...");
+      const emailCheckResponse = await fetch("/api/auth/check-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email.toLowerCase(),
+        }),
+      });
+
+      const emailCheckData = await emailCheckResponse.json();
+
+      if (!emailCheckResponse.ok) {
+        console.error("Email check failed:", emailCheckData);
+        setError("Unable to verify email. Please try again.");
+        return;
+      }
+
+      if (emailCheckData.exists) {
+        console.log("Email already exists, showing error");
+        setError("An account with this email already exists.");
+        setEmailExists(true);
+        return;
+      }
+
+      console.log("Email is available, proceeding with OTP...");
+      setEmailExists(false);
+
+      // Email doesn't exist, proceed with OTP
       const formattedPhone = formatPhoneNumber(formData.phone);
       const name = `${formData.firstName} ${formData.lastName}`.trim();
 
@@ -125,6 +158,7 @@ export default function Signup() {
     } catch (error) {
       console.error("Signup error:", error);
       setError("Something went wrong. Please try again.");
+      setEmailExists(false);
     } finally {
       setIsLoading(false);
     }
@@ -155,6 +189,16 @@ export default function Signup() {
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
                 {error}
+                {emailExists && (
+                  <div className="mt-2">
+                    <Link
+                      href="/auth/login"
+                      className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+                    >
+                      Sign in instead →
+                    </Link>
+                  </div>
+                )}
               </div>
             )}
 
