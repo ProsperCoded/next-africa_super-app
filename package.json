@@ -11,6 +11,9 @@
   "dependencies": {
     "@cometchat/calls-sdk-javascript": "^4.1.0",
     "@cometchat/chat-uikit-react": "^6.0.7",
+    "@libsql/client": "^0.15.10",
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
     "next": "15.4.3",
     "react": "19.1.0",
     "react-dom": "19.1.0"

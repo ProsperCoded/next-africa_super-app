@@ -1,20 +1,42 @@
 /* eslint-disable react/no-unescaped-entities */
-import './styles/CometChatApp.css';
-import { AppContextProvider } from './context/AppContext';
-import { CometChatHome } from './components/CometChatHome/CometChatHome';
-import React, { useEffect, useState } from 'react';
-import { useCometChatContext } from './context/CometChatContext';
-import { fontSizes } from './styleConfig';
-import { CometChat } from '@cometchat/chat-sdk-javascript';
-import useSystemColorScheme from './customHooks';
-import { generateExtendedColors } from './utils/utils';
-import { CometChatUIKit } from '@cometchat/chat-uikit-react';
-import '@cometchat/chat-uikit-react/css-variables.css';
+import "./styles/CometChatApp.css";
+import { AppContextProvider } from "./context/AppContext";
+import { CometChatHome } from "./components/CometChatHome/CometChatHome";
+import React, { useEffect, useState } from "react";
+import { useCometChatContext } from "./context/CometChatContext";
+import { fontSizes } from "./styleConfig";
+import { CometChat } from "@cometchat/chat-sdk-javascript";
+import useSystemColorScheme from "./customHooks";
+import { generateExtendedColors } from "./utils/utils";
+import { CometChatUIKit } from "@cometchat/chat-uikit-react";
+import "@cometchat/chat-uikit-react/css-variables.css";
+import LogoutButton from "../components/LogoutButton";
+import { getCurrentUser } from "../utils/auth";
+
 interface CometChatHomeProps {
   /** Default user for the chat application (optional). */
   user?: CometChat.User;
   /** Default group for the chat application (optional). */
   group?: CometChat.Group;
+}
+
+function LoginPlaceholder() {
+  return (
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f7f7f7",
+      }}
+    >
+      <div style={{ textAlign: "center", padding: "20px" }}>
+        <h2>Welcome to NEXT Chat</h2>
+        <p>Please authenticate to continue</p>
+      </div>
+    </div>
+  );
 }
 
 /**
@@ -26,6 +48,7 @@ interface CometChatHomeProps {
 function CometChatApp({ user, group }: CometChatHomeProps) {
   const [loggedInUser, setLoggedInUser] = useState<CometChat.User | null>(null);
   const { styleFeatures, setStyleFeatures } = useCometChatContext();
+  const [currentUserData, setCurrentUserData] = useState(getCurrentUser());
 
   const systemTheme = useSystemColorScheme();
 
@@ -34,7 +57,7 @@ function CometChatApp({ user, group }: CometChatHomeProps) {
    */
   useEffect(() => {
     CometChat.addLoginListener(
-      'runnable-sample-app',
+      "runnable-sample-app",
       new CometChat.LoginListener({
         loginSuccess: (user: CometChat.User) => {
           setLoggedInUser(user);
@@ -45,7 +68,7 @@ function CometChatApp({ user, group }: CometChatHomeProps) {
       })
     );
 
-    return () => CometChat.removeLoginListener('runnable-sample-app');
+    return () => CometChat.removeLoginListener("runnable-sample-app");
   }, []);
 
   /**
@@ -76,128 +99,90 @@ function CometChatApp({ user, group }: CometChatHomeProps) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
 
-  /**
-   * Updates theme-related styles dynamically based on user settings.
-   * It modifies CSS variables for text colors and primary colors.
-   */
   useEffect(() => {
-    const handleColorPickerChange = () => {
-      const checkForRootElement = () => {
-        const currentTheme = styleFeatures?.theme;
+    const rootElement = document.documentElement;
 
-        if (!currentTheme) {
-          console.warn('Theme not found:', currentTheme);
-          return;
-        }
+    const primaryColor = styleFeatures.color.brandColor;
 
-        const root = document.getElementById(`${currentTheme}-theme`);
-        if (!root) {
-          console.warn('Root element not found. Ensure the theme data attribute is correctly set.');
-          return;
-        }
+    // Apply primary color
+    rootElement.style.setProperty("--cc-primary", primaryColor);
 
-        const isLightTheme = currentTheme === 'light';
-        const isDarkTheme = currentTheme === 'dark';
-        const isSystemLight = currentTheme === 'system' && systemTheme === 'light';
-        const isSystemDark = currentTheme === 'system' && systemTheme === 'dark';
+    const primaryTextLight = styleFeatures.color.primaryTextLight;
+    const secondaryTextLight = styleFeatures.color.secondaryTextLight;
+    const primaryTextDark = styleFeatures.color.primaryTextDark;
+    const secondaryTextDark = styleFeatures.color.secondaryTextDark;
 
-        const brandColor = styleFeatures.color.brandColor;
+    // Apply current theme
+    const theme = styleFeatures.theme;
+    rootElement.setAttribute("data-theme", theme);
 
-        const properties = [
-          '--cometchat-primary-color',
-          '--cometchat-border-color-highlight',
-          '--cometchat-text-color-highlight',
-          '--cometchat-icon-color-highlight',
-          '--cometchat-primary-button-background',
-        ];
-
-        properties.forEach((property) => root.style.setProperty(property, brandColor));
-        generateExtendedColors();
-
-        // Handle primary text color
-        if ((isLightTheme || isSystemLight) && styleFeatures.color.primaryTextLight === '#FFFFFF') {
-          setStyleFeatures({
-            ...styleFeatures,
-            color: { ...styleFeatures.color, primaryTextLight: '#141414' },
-          });
-          root.style.setProperty('--cometchat-text-color-primary', '#141414');
-        } else if ((isDarkTheme || isSystemDark) && styleFeatures.color.primaryTextDark === '#141414') {
-          setStyleFeatures({
-            ...styleFeatures,
-            color: { ...styleFeatures.color, primaryTextDark: '#FFFFFF' },
-          });
-          root.style.setProperty('--cometchat-text-color-primary', '#FFFFFF');
-        } else {
-          root.style.setProperty(
-            '--cometchat-text-color-primary',
-            isLightTheme || isSystemLight ? styleFeatures.color.primaryTextLight : styleFeatures.color.primaryTextDark
-          );
-        }
-
-        // Handle secondary text color
-        if ((isLightTheme || isSystemLight) && styleFeatures.color.secondaryTextLight === '#989898') {
-          setStyleFeatures({
-            ...styleFeatures,
-            color: { ...styleFeatures.color, secondaryTextLight: '#727272' },
-          });
-          root.style.setProperty('--cometchat-text-color-secondary', '#727272');
-        } else if ((isDarkTheme || isSystemDark) && styleFeatures.color.secondaryTextDark === '#727272') {
-          setStyleFeatures({
-            ...styleFeatures,
-            color: { ...styleFeatures.color, secondaryTextDark: '#989898' },
-          });
-          root.style.setProperty('--cometchat-text-color-secondary', '#989898');
-        } else {
-          root.style.setProperty(
-            '--cometchat-text-color-secondary',
-            isLightTheme || isSystemLight
-              ? styleFeatures.color.secondaryTextLight
-              : styleFeatures.color.secondaryTextDark
-          );
-        }
-      };
-
-      // Use setTimeout to ensure DOM is ready
-      setTimeout(checkForRootElement, 100);
-    };
-    const handleFontChange = () => {
-      document.documentElement.style.setProperty('--cometchat-font-family', styleFeatures.typography.font);
-    };
-
-    const handleFontSizeChange = () => {
-      const selectedFontSize = fontSizes[styleFeatures.typography.size as keyof typeof fontSizes] || {};
-      Object.entries(selectedFontSize)?.forEach(([key, val]) => {
-        document.documentElement.style.setProperty(key, val);
-      });
-    };
-
-    if (styleFeatures) {
-      handleColorPickerChange();
-      handleFontChange();
-      handleFontSizeChange();
+    // Apply text colors
+    if (theme === "light") {
+      rootElement.style.setProperty("--cc-text-primary", primaryTextLight);
+      rootElement.style.setProperty("--cc-text-secondary", secondaryTextLight);
+    } else {
+      rootElement.style.setProperty("--cc-text-primary", primaryTextDark);
+      rootElement.style.setProperty("--cc-text-secondary", secondaryTextDark);
     }
-  }, [setStyleFeatures, styleFeatures, styleFeatures.theme, systemTheme, loggedInUser]);
 
-  // Run color change effect after a short delay to ensure elements are rendered
+    // Apply font
+    const font = styleFeatures.typography.font;
+    rootElement.style.setProperty("--cc-font-family", font);
+
+    // Apply font size
+    const size = styleFeatures.typography.size;
+    const sizeConfig = fontSizes[size as keyof typeof fontSizes];
+    if (sizeConfig) {
+      Object.entries(sizeConfig).forEach(([key, value]) => {
+        rootElement.style.setProperty(`--cc-${key}`, value as string);
+      });
+    }
+  }, [styleFeatures]);
+
   useEffect(() => {
-    // Apply a semi-transparent color overlay to a canvas element
+    if (styleFeatures.theme === "auto") {
+      const rootElement = document.documentElement;
+      rootElement.setAttribute("data-theme", systemTheme);
+    }
+  }, [systemTheme, styleFeatures.theme]);
+
+  // Canvas color recoloring function for audio messages (if brand color is changed)
+  useEffect(() => {
     const recolorCanvasContent = (canvas: HTMLCanvasElement) => {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        // Set blend mode to 'source-atop' so the fill color applies **only** to existing (non-transparent) pixels
-        ctx.globalCompositeOperation = 'source-atop';
+      if (!canvas.getContext) return;
 
-        // Set fill color with opacity and apply it to the entire canvas
-        ctx.fillStyle = hexToRGBA(styleFeatures.color.brandColor, 0.3);
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
 
-        // Reset blend mode to default ('source-over') so future drawings behave normally
-        ctx.globalCompositeOperation = 'source-over';
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+
+      const targetColor = hexToRGBA(styleFeatures.color.brandColor, 1);
+      const [targetR, targetG, targetB] = targetColor
+        .match(/\d+/g)!
+        .map(Number);
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const a = data[i + 3];
+
+        // Check if this pixel is not transparent and is part of the waveform (dark colors)
+        if (a > 0 && r < 100 && g < 100 && b < 100) {
+          data[i] = targetR; // Red channel
+          data[i + 1] = targetG; // Green channel
+          data[i + 2] = targetB; // Blue channel
+          // Keep original alpha
+        }
       }
+
+      ctx.putImageData(imageData, 0, 0);
     };
+
     // Recursive function to find and recolor canvases inside Shadow DOM and nested elements
     const findAndRecolorCanvases = (element: Element | ShadowRoot) => {
-      if (element instanceof Element && element.matches('canvas')) {
+      if (element instanceof Element && element.matches("canvas")) {
         recolorCanvasContent(element as HTMLCanvasElement);
       }
 
@@ -213,41 +198,72 @@ function CometChatApp({ user, group }: CometChatHomeProps) {
     };
     // Apply color change to all canvases inside elements with the target class
     const applyColorChange = () => {
-      document.querySelectorAll('.cometchat-audio-bubble-incoming').forEach((parentDiv) => {
-        findAndRecolorCanvases(parentDiv);
-      });
+      document
+        .querySelectorAll(".cometchat-audio-bubble-incoming")
+        .forEach((parentDiv) => {
+          findAndRecolorCanvases(parentDiv);
+        });
     };
     setTimeout(applyColorChange, 100); // Wait for rendering
   }, [styleFeatures.color.brandColor]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && document.activeElement?.classList.contains('cometchat-search-bar__input')) {
+      if (
+        e.key === "Enter" &&
+        document.activeElement?.classList.contains(
+          "cometchat-search-bar__input"
+        )
+      ) {
         e.preventDefault();
         e.stopPropagation();
       }
     };
 
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
   }, []);
 
   return (
     <div className="CometChatApp">
+      {/* User info and logout header */}
+      {loggedInUser && currentUserData && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            right: 0,
+            zIndex: 1000,
+            background: "white",
+            padding: "10px 20px",
+            borderBottomLeftRadius: "8px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+          }}
+        >
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontSize: "14px", fontWeight: "600", color: "#333" }}>
+              {currentUserData.name}
+            </div>
+            <div style={{ fontSize: "12px", color: "#666" }}>
+              {currentUserData.email}
+            </div>
+          </div>
+          <LogoutButton className="text-xs" />
+        </div>
+      )}
+
       <AppContextProvider>
-        {loggedInUser ? <CometChatHome defaultGroup={group} defaultUser={user} /> : <LoginPlaceholder />}
+        {loggedInUser ? (
+          <CometChatHome defaultGroup={group} defaultUser={user} />
+        ) : (
+          <LoginPlaceholder />
+        )}
       </AppContextProvider>
     </div>
   );
 }
 
 export default CometChatApp;
-
-const LoginPlaceholder = () => {
-  return (
-    <div className="login-placeholder">
-      <div className="cometchat-logo" />
-      <h3>This is where your website&apos;s login screen should appear.</h3>
-    </div>
-  );
-};
