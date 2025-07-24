@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@cometchat/calls-sdk-javascript": "^4.1.0",
+    "@cometchat/chat-sdk-javascript": "^4.0.13",
     "@cometchat/chat-uikit-react": "^6.0.7",
     "@libsql/client": "^0.15.10",
     "@types/bcrypt": "^6.0.0",
@@ -23,9 +24,11 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/tailwindcss": "^3.0.11",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.11",
