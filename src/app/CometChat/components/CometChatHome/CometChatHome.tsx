@@ -44,6 +44,7 @@ import { CometChatCallDetails } from "../CometChatCallLog/CometChatCallLogDetail
 import { CometChatAddContact } from "../CometChatAddContact/CometChatAddContact";
 import { CometChatFindGroups } from "../../CometChatFindGroups/CometChatFindGroups";
 import { CometChatAlertPopup } from "../CometChatAlertPopup/CometChatAlertPopup";
+import { FloatingActionButton } from "../../../components/ui/FloatingActionButton";
 import {
   CometChatAvatar,
   CometChatButton,
@@ -2184,6 +2185,19 @@ function CometChatHome({ defaultUser, defaultGroup }: CometChatHomeProps) {
           isOpen={showFindGroups}
           onClose={() => setShowFindGroups(false)}
           onGroupJoined={handleGroupJoined}
+        />
+
+        {/* Floating Action Button */}
+        <FloatingActionButton
+          onAddContact={onAddContactClicked}
+          onFindGroups={onFindGroupsClicked}
+          onStartConversation={() => {
+            setShowNewChat(true);
+            setAppState({
+              type: "updateSideComponent",
+              payload: { type: "", visible: false },
+            });
+          }}
         />
       </div>
     )

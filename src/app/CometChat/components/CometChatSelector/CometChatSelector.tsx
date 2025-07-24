@@ -136,11 +136,37 @@ const CometChatSelector = (props: SelectorProps) => {
   }, [callFeatures, activeTab]);
 
   const getOptions = (): CometChatOption[] => {
+    const userCredentials = localStorage.getItem("userCredentials");
+    let currentUserData = null;
+
+    try {
+      if (userCredentials) {
+        currentUserData = JSON.parse(userCredentials);
+      }
+    } catch (error) {
+      console.error("Error parsing user credentials:", error);
+    }
+
     return [
+      // User info section
       new CometChatOption({
         id: "logged-in-user",
-        title: (loggedInUser && loggedInUser.getName()) || "",
+        title:
+          currentUserData?.name ||
+          (loggedInUser && loggedInUser.getName()) ||
+          "User",
         iconURL: userIcon,
+        subtitle: currentUserData?.email || "",
+        onClick: () => {
+          // Could open user profile or settings
+        },
+      }),
+      // Divider
+      new CometChatOption({
+        id: "divider-1",
+        title: "",
+        iconURL: "",
+        divider: true,
       }),
       new CometChatOption({
         id: "create-conversation",
@@ -165,6 +191,13 @@ const CometChatSelector = (props: SelectorProps) => {
         onClick: () => {
           onFindGroupsClicked();
         },
+      }),
+      // Divider
+      new CometChatOption({
+        id: "divider-2",
+        title: "",
+        iconURL: "",
+        divider: true,
       }),
       new CometChatOption({
         id: "log-out",
@@ -192,11 +225,28 @@ const CometChatSelector = (props: SelectorProps) => {
     return (
       <div className="cometchat-conversations-header">
         <div className="cometchat-conversations-header__title">
-          {getLocalizedString("conversation_chat_title")}
+          {getLocalizedString("chats")}
         </div>
-        <div className="chat-menu">
+        <div className="cometchat-conversations-header__actions">
+          {/* Prominent Start Chat Button */}
+          <CometChatButton
+            onClick={() => {
+              onNewChatClicked();
+            }}
+            iconURL={chatIcon}
+            text="New"
+            style={{
+              background: "var(--color-primary)",
+              color: "white",
+              borderRadius: "20px",
+              padding: "6px 12px",
+              fontSize: "12px",
+              fontWeight: "500",
+              border: "none",
+              marginRight: "8px",
+            }}
+          />
           <CometChatContextMenu
-            key="delete-button"
             closeOnOutsideClick={true}
             placement={Placement.left}
             data={getOptions() as CometChatOption[]}
@@ -207,6 +257,34 @@ const CometChatSelector = (props: SelectorProps) => {
                 onClick();
               }
             }}
+            moreIconURL=""
+            customIcon={
+              <div
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  background: "var(--color-primary)",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: "white",
+                }}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <circle cx="12" cy="12" r="1" />
+                  <circle cx="12" cy="5" r="1" />
+                  <circle cx="12" cy="19" r="1" />
+                </svg>
+              </div>
+            }
           />
         </div>
       </div>
