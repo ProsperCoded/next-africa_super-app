@@ -14,7 +14,7 @@ const inputVariants = cva(
         warning:
           "border-warning-500 bg-warning-50 text-text-primary focus:border-warning-600 focus:ring-warning-500/20",
         error:
-          "border-error-500 bg-error-50 text-text-primary focus:border-error-600 focus:ring-error-500/20",
+          "border-error-500 bg-error-50   text-text-primary focus:border-error-600 focus:ring-error-500/20",
       },
       inputSize: {
         sm: "h-8 px-3 text-xs",
