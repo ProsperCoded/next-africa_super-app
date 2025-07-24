@@ -86,12 +86,19 @@
   font-size: 14px;
   transition: all 0.2s;
   box-sizing: border-box;
+  color: #111827;
+  background-color: #ffffff;
+}
+
+.cometchat-add-contact-input::placeholder {
+  color: #6b7280;
 }
 
 .cometchat-add-contact-input:focus {
   outline: none;
   border-color: #00f45e;
   box-shadow: 0 0 0 3px rgba(0, 244, 94, 0.1);
+  color: #111827;
 }
 
 .cometchat-add-contact-results {

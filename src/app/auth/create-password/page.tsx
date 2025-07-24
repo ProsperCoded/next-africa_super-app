@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
-export default function CreatePassword() {
+function CreatePasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -328,5 +328,33 @@ export default function CreatePassword() {
         </div>
       </div>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
+      <div className="max-w-md w-full space-y-8">
+        <div className="text-center">
+          <div className="mx-auto w-16 h-16 relative mb-4">
+            <Image
+              src="/assets/logo-light.png"
+              alt="NEXT Logo"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Loading...</h1>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function CreatePassword() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <CreatePasswordContent />
+    </Suspense>
   );
 }
