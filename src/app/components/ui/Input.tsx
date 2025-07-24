@@ -16,7 +16,7 @@ const inputVariants = cva(
         error:
           "border-error-500 bg-error-50 text-text-primary focus:border-error-600 focus:ring-error-500/20",
       },
-      size: {
+      inputSize: {
         sm: "h-8 px-3 text-xs",
         md: "h-10 px-4 text-sm",
         lg: "h-12 px-6 text-base",
@@ -24,19 +24,20 @@ const inputVariants = cva(
     },
     defaultVariants: {
       variant: "default",
-      size: "md",
+      inputSize: "md",
     },
   }
 );
 
 interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
-    VariantProps<typeof inputVariants> {
+    Omit<VariantProps<typeof inputVariants>, "inputSize"> {
   label?: string;
   hint?: string;
   error?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  inputSize?: "sm" | "md" | "lg";
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -44,7 +45,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     {
       className,
       variant,
-      size,
+      inputSize,
       label,
       hint,
       error,
@@ -72,7 +73,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             className={cn(
-              inputVariants({ variant: inputVariant, size }),
+              inputVariants({ variant: inputVariant, inputSize }),
               leftIcon && "pl-10",
               rightIcon && "pr-10",
               className
