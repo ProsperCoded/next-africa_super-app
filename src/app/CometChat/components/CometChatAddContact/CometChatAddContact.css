@@ -1,0 +1,313 @@
+.cometchat-add-contact-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.cometchat-add-contact-modal {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.cometchat-add-contact-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cometchat-add-contact-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cometchat-add-contact-close {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.cometchat-add-contact-close:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.cometchat-add-contact-content {
+  padding: 24px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.cometchat-add-contact-search label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.cometchat-add-contact-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.cometchat-add-contact-input:focus {
+  outline: none;
+  border-color: #00f45e;
+  box-shadow: 0 0 0 3px rgba(0, 244, 94, 0.1);
+}
+
+.cometchat-add-contact-results {
+  margin-top: 24px;
+}
+
+.cometchat-add-contact-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  color: #6b7280;
+}
+
+.cometchat-add-contact-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid #00f45e;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.cometchat-add-contact-empty {
+  text-align: center;
+  padding: 32px;
+  color: #6b7280;
+}
+
+.cometchat-add-contact-empty-hint {
+  font-size: 12px;
+  margin-top: 8px;
+  color: #9ca3af;
+}
+
+.cometchat-add-contact-list h4 {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.cometchat-add-contact-user {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cometchat-add-contact-user:hover {
+  background-color: #f9fafb;
+  border-color: #00f45e;
+}
+
+.cometchat-add-contact-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.cometchat-add-contact-user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cometchat-add-contact-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cometchat-add-contact-user-info h5 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cometchat-add-contact-user-info p {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cometchat-add-contact-user-status {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.cometchat-add-contact-user-status.online {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.cometchat-add-contact-add-btn {
+  background-color: #00f45e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.cometchat-add-contact-add-btn:hover {
+  background-color: #00d651;
+}
+
+.cometchat-add-contact-instructions {
+  text-align: center;
+  padding: 32px 16px;
+  color: #6b7280;
+}
+
+.cometchat-add-contact-instructions-icon {
+  margin-bottom: 16px;
+}
+
+.cometchat-add-contact-instructions h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.cometchat-add-contact-instructions p {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.cometchat-add-contact-instructions ul {
+  text-align: left;
+  max-width: 280px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.cometchat-add-contact-instructions li {
+  font-size: 12px;
+  margin-bottom: 6px;
+  padding-left: 16px;
+  position: relative;
+}
+
+.cometchat-add-contact-instructions li::before {
+  content: "•";
+  color: #00f45e;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.cometchat-add-contact-success {
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.cometchat-add-contact-success-icon {
+  margin-bottom: 16px;
+}
+
+.cometchat-add-contact-success h3 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #065f46;
+}
+
+.cometchat-add-contact-success p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.cometchat-add-contact-hint {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #166534;
+}
+
+.cometchat-add-contact-hint strong {
+  font-weight: 600;
+}

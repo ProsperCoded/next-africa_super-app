@@ -1,13 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import chatIcon from '../../assets/start_chat.svg';
-import createGroupIcon from '../../assets/create-group.svg';
-import logoutIcon from '../../assets/logout.svg';
-import userIcon from '../../assets/user.svg';
-import { Call, Conversation, Group, User } from '@cometchat/chat-sdk-javascript';
-import '../../styles/CometChatSelector/CometChatSelector.css';
-import { CometChatJoinGroup } from '../CometChatJoinGroup/CometChatJoinGroup';
-import CometChatCreateGroup from '../CometChatCreateGroup/CometChatCreateGroup';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import chatIcon from "../../assets/start_chat.svg";
+import createGroupIcon from "../../assets/create-group.svg";
+import logoutIcon from "../../assets/logout.svg";
+import userIcon from "../../assets/user.svg";
+import {
+  Call,
+  Conversation,
+  Group,
+  User,
+} from "@cometchat/chat-sdk-javascript";
+import "../../styles/CometChatSelector/CometChatSelector.css";
+import { CometChatJoinGroup } from "../CometChatJoinGroup/CometChatJoinGroup";
+import CometChatCreateGroup from "../CometChatCreateGroup/CometChatCreateGroup";
 import {
   CometChatButton,
   CometChatCallLogs,
@@ -20,22 +31,26 @@ import {
   getLocalizedString,
   CometChatContextMenu,
   Placement,
-} from '@cometchat/chat-uikit-react';
-import { AppContext } from '../../context/AppContext';
-import { useCometChatContext } from '../../context/CometChatContext';
-import { CallLog } from '@cometchat/calls-sdk-javascript';
+} from "@cometchat/chat-uikit-react";
+import { AppContext } from "../../context/AppContext";
+import { useCometChatContext } from "../../context/CometChatContext";
+import { CallLog } from "@cometchat/calls-sdk-javascript";
 
 interface SelectorProps {
   group?: Group;
   showJoinGroup?: boolean;
   activeTab?: string;
   activeItem?: User | Group | Conversation | Call | CallLog;
-  onSelectorItemClicked?: (input: User | Group | Conversation | Call, type: string) => void;
+  onSelectorItemClicked?: (
+    input: User | Group | Conversation | Call,
+    type: string
+  ) => void;
   onProtectedGroupJoin?: (group: Group) => void;
   showCreateGroup?: boolean;
   setShowCreateGroup?: Dispatch<SetStateAction<boolean>>;
   onHide?: () => void;
   onNewChatClicked?: () => void;
+  onAddContactClicked?: () => void;
   onGroupCreated?: (group: Group) => void;
   hideCreateGroupButton?: boolean;
 }
@@ -44,16 +59,17 @@ const CometChatSelector = (props: SelectorProps) => {
   const {
     group,
     showJoinGroup,
-    activeItem,
     activeTab,
+    activeItem,
     onSelectorItemClicked = () => {},
     onProtectedGroupJoin = () => {},
     showCreateGroup,
     setShowCreateGroup = () => {},
     onHide = () => {},
     onNewChatClicked = () => {},
+    onAddContactClicked = () => {},
     onGroupCreated = () => {},
-    hideCreateGroupButton = true,
+    hideCreateGroupButton,
   } = props;
 
   const [loggedInUser, setLoggedInUser] = useState<CometChat.User | null>();
@@ -66,34 +82,44 @@ const CometChatSelector = (props: SelectorProps) => {
   }, [getLoggedInUser]);
 
   useEffect(() => {
-    if (activeTab === 'calls') {
+    if (activeTab === "calls") {
       const toggleCallIcons = () => {
-        const voiceCallIcons = document.getElementsByClassName('cometchat-call-logs__list-item-trailing-view-audio');
-        const videoCallIcons = document.getElementsByClassName('cometchat-call-logs__list-item-trailing-view-video');
+        const voiceCallIcons = document.getElementsByClassName(
+          "cometchat-call-logs__list-item-trailing-view-audio"
+        );
+        const videoCallIcons = document.getElementsByClassName(
+          "cometchat-call-logs__list-item-trailing-view-video"
+        );
         if (callFeatures.voiceAndVideoCalling.oneOnOneVoiceCalling) {
           Array.from(voiceCallIcons).forEach((icon: any) => {
-            icon.style.display = '';
+            icon.style.display = "";
           });
         } else {
           Array.from(voiceCallIcons).forEach((icon: any) => {
-            icon.style.display = 'none';
+            icon.style.display = "none";
           });
         }
 
         if (callFeatures.voiceAndVideoCalling.oneOnOneVideoCalling) {
           Array.from(videoCallIcons).forEach((icon: any) => {
-            icon.style.display = '';
+            icon.style.display = "";
           });
         } else {
           Array.from(videoCallIcons).forEach((icon: any) => {
-            icon.style.display = 'none';
+            icon.style.display = "none";
           });
         }
       };
 
-      if (document.getElementsByClassName('cometchat-call-logs__list-item-trailing-view-audio').length === 0) {
+      if (
+        document.getElementsByClassName(
+          "cometchat-call-logs__list-item-trailing-view-audio"
+        ).length === 0
+      ) {
         const interval = setInterval(() => {
-          const targetElement = document.getElementsByClassName('cometchat-call-logs__list-item-trailing-view-audio');
+          const targetElement = document.getElementsByClassName(
+            "cometchat-call-logs__list-item-trailing-view-audio"
+          );
           if (targetElement.length > 0) {
             clearInterval(interval);
             toggleCallIcons();
@@ -110,21 +136,29 @@ const CometChatSelector = (props: SelectorProps) => {
   const getOptions = (): CometChatOption[] => {
     return [
       new CometChatOption({
-        id: 'logged-in-user',
-        title: (loggedInUser && loggedInUser.getName()) || '',
+        id: "logged-in-user",
+        title: (loggedInUser && loggedInUser.getName()) || "",
         iconURL: userIcon,
       }),
       new CometChatOption({
-        id: 'create-conversation',
-        title: getLocalizedString('create_conversation'),
+        id: "create-conversation",
+        title: getLocalizedString("create_conversation"),
         iconURL: chatIcon,
         onClick: () => {
           onNewChatClicked();
         },
       }),
       new CometChatOption({
-        id: 'log-out',
-        title: getLocalizedString('log_out'),
+        id: "add-contact",
+        title: getLocalizedString("add_contact") || "Add Contact",
+        iconURL: userIcon,
+        onClick: () => {
+          onAddContactClicked();
+        },
+      }),
+      new CometChatOption({
+        id: "log-out",
+        title: getLocalizedString("log_out"),
         iconURL: logoutIcon,
         onClick: () => {
           logOut();
@@ -137,17 +171,19 @@ const CometChatSelector = (props: SelectorProps) => {
     CometChatUIKit.logout()
       .then(() => {
         setLoggedInUser(null);
-        setAppState({ type: 'resetAppState' });
+        setAppState({ type: "resetAppState" });
       })
       .catch((error) => {
-        console.error('error', error);
+        console.error("error", error);
       });
   };
 
   const conversationsHeaderView = () => {
     return (
       <div className="cometchat-conversations-header">
-        <div className="cometchat-conversations-header__title">{getLocalizedString('conversation_chat_title')}</div>
+        <div className="cometchat-conversations-header__title">
+          {getLocalizedString("conversation_chat_title")}
+        </div>
         <div className="chat-menu">
           <CometChatContextMenu
             key="delete-button"
@@ -170,7 +206,9 @@ const CometChatSelector = (props: SelectorProps) => {
   const groupsHeaderView = () => {
     return (
       <div className="cometchat-groups-header">
-        <div className="cometchat-groups-header__title">{getLocalizedString('group_title')}</div>
+        <div className="cometchat-groups-header__title">
+          {getLocalizedString("group_title")}
+        </div>
         {!hideCreateGroupButton && (
           <CometChatButton
             onClick={() => {
@@ -194,37 +232,47 @@ const CometChatSelector = (props: SelectorProps) => {
               onProtectedGroupJoin={(group) => onProtectedGroupJoin(group)}
             />
           )}
-          {activeTab === 'chats' ? (
+          {activeTab === "chats" ? (
             <CometChatConversations
               activeConversation={activeItem as Conversation}
               headerView={conversationsHeaderView()}
               onItemClick={(e) => {
-                onSelectorItemClicked(e, 'updateSelectedItem');
+                onSelectorItemClicked(e, "updateSelectedItem");
               }}
-              hideUserStatus={chatFeatures && !chatFeatures?.coreMessagingExperience?.userAndFriendsPresence}
-              hideReceipts={chatFeatures && !chatFeatures?.coreMessagingExperience?.messageDeliveryAndReadReceipts}
+              hideUserStatus={
+                chatFeatures &&
+                !chatFeatures?.coreMessagingExperience?.userAndFriendsPresence
+              }
+              hideReceipts={
+                chatFeatures &&
+                !chatFeatures?.coreMessagingExperience
+                  ?.messageDeliveryAndReadReceipts
+              }
             />
-          ) : activeTab === 'calls' ? (
+          ) : activeTab === "calls" ? (
             <CometChatCallLogs
               activeCall={activeItem as Call}
               onItemClick={(e: Call) => {
-                onSelectorItemClicked(e, 'updateSelectedItemCall');
+                onSelectorItemClicked(e, "updateSelectedItemCall");
               }}
             />
-          ) : activeTab === 'users' ? (
+          ) : activeTab === "users" ? (
             <CometChatUsers
               activeUser={activeItem as User}
               onItemClick={(e) => {
-                onSelectorItemClicked(e, 'updateSelectedItemUser');
+                onSelectorItemClicked(e, "updateSelectedItemUser");
               }}
-              hideUserStatus={chatFeatures && !chatFeatures?.coreMessagingExperience?.userAndFriendsPresence}
+              hideUserStatus={
+                chatFeatures &&
+                !chatFeatures?.coreMessagingExperience?.userAndFriendsPresence
+              }
             />
-          ) : activeTab === 'groups' ? (
+          ) : activeTab === "groups" ? (
             <CometChatGroups
               activeGroup={activeItem as Group}
               headerView={groupsHeaderView()}
               onItemClick={(e) => {
-                onSelectorItemClicked(e, 'updateSelectedItemGroup');
+                onSelectorItemClicked(e, "updateSelectedItemGroup");
               }}
             />
           ) : null}
