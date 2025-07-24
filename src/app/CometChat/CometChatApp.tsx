@@ -5,7 +5,7 @@ import { CometChatHome } from "./components/CometChatHome/CometChatHome";
 import React, { useEffect, useState } from "react";
 import { useCometChatContext } from "./context/CometChatContext";
 import { fontSizes } from "./styleConfig";
-import { CometChat } from "@cometchat/chat-sdk-javascript";
+import { CometChat, LoginListener } from "@cometchat/chat-sdk-javascript";
 import useSystemColorScheme from "./customHooks";
 import { generateExtendedColors } from "./utils/utils";
 import { CometChatUIKit } from "@cometchat/chat-uikit-react";
@@ -43,17 +43,26 @@ function CometChatApp({ user, group }: CometChatHomeProps) {
   const { styleFeatures } = useCometChatContext();
 
   useEffect(() => {
-    const updateLoggedInUser = (user: CometChat.User | null) => {
-      setLoggedInUser(user);
+    // CometChat LoginListener expects an object with onLoginSuccess and onLogoutSuccess methods
+    const loginListener: LoginListener = {
+      loginSuccess: (user: CometChat.User) => {
+        setLoggedInUser(user);
+      },
+      logoutSuccess: () => {
+        setLoggedInUser(null);
+      },
+      loginFailure: () => {
+        setLoggedInUser(null);
+      },
     };
 
     // Set up listener for login state changes
-    CometChat.addLoginListener("APP_LOGIN_LISTENER", updateLoggedInUser);
+    CometChat.addLoginListener("APP_LOGIN_LISTENER", loginListener);
 
     // Get initial logged in user
     const initialUser = CometChatUIKit.getLoggedinUser();
     if (initialUser) {
-      setLoggedInUser(initialUser);
+      initialUser.then((user) => setLoggedInUser(user));
     }
 
     // Get current user data from localStorage
