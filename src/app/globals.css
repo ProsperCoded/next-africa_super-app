@@ -1,10 +1,12 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   /* Light theme colors */
   --background: #ffffff;
-  --foreground: #111827;
-  --text-primary: #111827;
+  --foreground: #05023b;
+  --text-primary: #05023b;
   --text-secondary: #6b7280;
   --text-tertiary: #9ca3af;
   --text-placeholder: #9ca3af;
@@ -37,59 +39,6 @@
   --shadow-strong: rgba(0, 0, 0, 0.12);
   --shadow-primary: rgba(0, 244, 94, 0.15);
   --shadow-secondary: rgba(5, 2, 59, 0.15);
-}
-
-@theme inline {
-  /* Tailwind theme customization */
-  --color-primary-500: var(--color-primary);
-  --color-primary-600: var(--color-primary-hover);
-  --color-primary-50: var(--color-primary-light);
-  --color-secondary-900: var(--color-secondary);
-  --color-secondary-50: var(--color-secondary-light);
-
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-tertiary: var(--text-tertiary);
-
-  --color-bg-primary: var(--bg-primary);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-bg-tertiary: var(--bg-tertiary);
-
-  --color-border-light: var(--border-light);
-  --color-border-medium: var(--border-medium);
-  --color-border-dark: var(--border-dark);
-
-  --color-success-500: var(--color-success);
-  --color-warning-500: var(--color-warning);
-  --color-error-500: var(--color-error);
-
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "Fira Code", monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --text-primary: #ffffff;
-    --text-secondary: #d1d5db;
-    --text-tertiary: #9ca3af;
-    --text-placeholder: #6b7280;
-
-    --bg-primary: #0a0a0a;
-    --bg-secondary: #111827;
-    --bg-tertiary: #1f2937;
-
-    --border-light: #374151;
-    --border-medium: #4b5563;
-    --border-dark: #6b7280;
-
-    --shadow-soft: rgba(0, 0, 0, 0.2);
-    --shadow-medium: rgba(0, 0, 0, 0.3);
-    --shadow-strong: rgba(0, 0, 0, 0.4);
-  }
 }
 
 /* Base styles */
@@ -165,30 +114,32 @@ div input,
   opacity: 1 !important;
 }
 
-/* Button styles */
-.btn {
-  @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
-}
+@layer components {
+  /* Button styles */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
 
-.btn-primary {
-  @apply bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
-}
+  .btn-primary {
+    @apply bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
+  }
 
-.btn-secondary {
-  @apply bg-secondary-900 text-white hover:bg-secondary-800 focus:ring-secondary-900;
-}
+  .btn-secondary {
+    @apply bg-secondary-900 text-white hover:bg-secondary-800 focus:ring-secondary-900;
+  }
 
-.btn-outline {
-  @apply border border-border-medium text-text-primary hover:bg-bg-secondary focus:ring-primary-500;
-}
+  .btn-outline {
+    @apply border border-border-medium text-text-primary hover:bg-bg-secondary focus:ring-primary-500;
+  }
 
-/* Card styles */
-.card {
-  @apply bg-bg-primary border border-border-light rounded-xl shadow-soft;
-}
+  /* Card styles */
+  .card {
+    @apply bg-bg-primary border border-border-light rounded-xl shadow-soft;
+  }
 
-.card-hover {
-  @apply transition-all duration-200 hover:shadow-medium hover:border-border-medium;
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-medium hover:border-border-medium;
+  }
 }
 
 /* Text styles */

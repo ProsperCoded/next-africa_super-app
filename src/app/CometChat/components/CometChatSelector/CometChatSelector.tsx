@@ -6,10 +6,10 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import chatIcon from "../../assets/start_chat.svg";
+import chatIcon from "../../assets/start-chat.svg";
 import createGroupIcon from "../../assets/create-group.svg";
 import logoutIcon from "../../assets/logout.svg";
-import userIcon from "../../assets/user.svg";
+import userIcon from "../../assets/users.svg";
 import {
   Call,
   Conversation,
@@ -54,6 +54,10 @@ interface SelectorProps {
   onFindGroupsClicked?: () => void;
   onGroupCreated?: (group: Group) => void;
   hideCreateGroupButton?: boolean;
+}
+
+interface UserCredentials {
+  name: string;
 }
 
 const CometChatSelector = (props: SelectorProps) => {
@@ -138,7 +142,7 @@ const CometChatSelector = (props: SelectorProps) => {
 
   const getOptions = (): CometChatOption[] => {
     const userCredentials = localStorage.getItem("userCredentials");
-    let currentUserData = null;
+    let currentUserData: UserCredentials | null = null;
 
     try {
       if (userCredentials) {
@@ -220,6 +224,8 @@ const CometChatSelector = (props: SelectorProps) => {
       .then(() => {
         setLoggedInUser(null);
         setAppState({ type: "resetAppState" });
+        localStorage.removeItem("userCredentials");
+        localStorage.removeItem("user");
       })
       .catch((error) => {
         console.error("error", error);
