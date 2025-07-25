@@ -84,6 +84,10 @@ export default function Login() {
       console.log("Verification - stored credentials:", storedCredentials);
       console.log("Verification - stored UID:", storedUID);
 
+      // Add a small delay to ensure localStorage is properly set before navigation
+      // This prevents race conditions with CometChat initialization
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
       // Redirect to home page (which will handle CometChat auto-login)
       router.push("/");
     } catch (error: any) {

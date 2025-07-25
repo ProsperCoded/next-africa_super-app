@@ -101,16 +101,37 @@ export function logout(): void {
   if (typeof window === "undefined") return;
 
   try {
+    // Trigger cross-tab logout event first (before clearing storage)
+    localStorage.setItem("logout-trigger", Date.now().toString());
+
+    // Clear specific items first
     localStorage.removeItem("currentUser");
     localStorage.removeItem("userCredentials");
+    localStorage.removeItem("user");
 
     // Clear any session storage as well
     sessionStorage.removeItem("signupData");
     sessionStorage.removeItem("otpData");
 
-    console.log("User logged out successfully");
+    // Clear all localStorage to ensure complete logout
+    // This is the recommended approach for secure logout
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+    } catch (clearError) {
+      console.warn("Could not clear storage:", clearError);
+    }
+
+    console.log("User logged out successfully - all storage cleared");
   } catch (error) {
     console.error("Error during logout:", error);
+    // Fallback: try to clear storage anyway
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+    } catch (fallbackError) {
+      console.error("Could not clear storage during fallback:", fallbackError);
+    }
   }
 }
 

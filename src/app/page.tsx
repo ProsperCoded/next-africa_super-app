@@ -15,8 +15,11 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check authentication state on mount
+    // Check authentication state on mount with delay to handle race conditions
     const checkAuth = async () => {
+      // Add a small delay to ensure localStorage is ready after redirects
+      await new Promise((resolve) => setTimeout(resolve, 50));
+
       const state = checkAuthState();
       setAuthState(state);
 
@@ -34,9 +37,24 @@ export default function Home() {
 
     // Listen for storage changes (for multi-tab logout)
     const handleStorageChange = (e: StorageEvent) => {
+      // If currentUser or userCredentials are removed/changed, it means logout occurred
       if (e.key === "currentUser" || e.key === "userCredentials") {
         console.log("Storage changed, rechecking auth...");
+
+        // If the storage item was removed (logout), redirect immediately
+        if (e.newValue === null && e.oldValue !== null) {
+          console.log("Logout detected in another tab, redirecting...");
+          window.location.href = "/auth/welcome";
+          return;
+        }
+
         checkAuth();
+      }
+
+      // Also listen for a custom logout event for immediate cross-tab logout
+      if (e.key === "logout-trigger") {
+        console.log("Logout trigger detected from another tab");
+        window.location.href = "/auth/welcome";
       }
     };
 

@@ -26,20 +26,40 @@ const CometChatNoSSR: React.FC = () => {
       try {
         console.log("Starting CometChat initialization...");
 
-        // Get current user data from localStorage with better error handling
-        const uid = getCurrentUserUID();
-        const userData = getCurrentUser();
+        // Add retry logic for localStorage reading to handle race conditions
+        let uid: string | null = null;
+        let userData: any = null;
+        let retryCount = 0;
+        const maxRetries = 3;
 
-        console.log("Checking localStorage data:", { uid, userData });
+        while ((!uid || !userData) && retryCount < maxRetries) {
+          uid = getCurrentUserUID();
+          userData = getCurrentUser();
 
-        if (!uid || !userData) {
-          console.error("No user UID or user data found in localStorage", {
-            uid,
-            userData,
-          });
-          // Don't call logout immediately, just redirect to auth
-          window.location.href = "/auth/welcome";
-          return;
+          console.log(
+            `Attempt ${retryCount + 1}: Checking localStorage data:`,
+            { uid, userData }
+          );
+
+          if (!uid || !userData) {
+            if (retryCount < maxRetries - 1) {
+              console.log("localStorage data not ready, retrying in 200ms...");
+              await new Promise((resolve) => setTimeout(resolve, 200));
+              retryCount++;
+            } else {
+              console.error(
+                "No user UID or user data found in localStorage after retries",
+                {
+                  uid,
+                  userData,
+                  retryCount,
+                }
+              );
+              // Don't call logout immediately, just redirect to auth
+              window.location.href = "/auth/welcome";
+              return;
+            }
+          }
         }
 
         console.log("Found user:", {
@@ -47,7 +67,7 @@ const CometChatNoSSR: React.FC = () => {
           name: userData.name,
           email: userData.email,
         });
-        setCurrentUID(uid);
+        setCurrentUID(uid!);
 
         // Validate environment variables
         if (
@@ -85,7 +105,7 @@ const CometChatNoSSR: React.FC = () => {
         console.log("Checking if user is already logged in...");
         const loggedInUser = await CometChatUIKit.getLoggedinUser();
 
-        if (loggedInUser && loggedInUser.getUid?.() === uid) {
+        if (loggedInUser && loggedInUser.getUid?.() === uid!) {
           console.log("User already logged in to CometChat:", {
             uid: loggedInUser.getUid?.(),
             name: loggedInUser.getName?.() || "Unknown",
@@ -96,7 +116,7 @@ const CometChatNoSSR: React.FC = () => {
           console.log("Logging in user to CometChat:", { uid });
 
           try {
-            const user = await CometChatUIKit.login(uid);
+            const user = await CometChatUIKit.login(uid!);
             console.log("CometChat login successful:", {
               uid: user.getUid?.(),
               name: user.getName?.() || "Unknown",
@@ -111,10 +131,57 @@ const CometChatNoSSR: React.FC = () => {
               loginError.message?.includes("does not exist")
             ) {
               console.log(
-                "User doesn't exist in CometChat, this might be expected for new users"
+                "User doesn't exist in CometChat, attempting to create user..."
               );
+
+              try {
+                // Try to create the user in CometChat
+                const createResponse = await fetch(
+                  "/api/create-cometchat-user",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      uid: uid!,
+                      name: userData.name,
+                      email: userData.email,
+                      phone: userData.phone,
+                    }),
+                  }
+                );
+
+                const createData = await createResponse.json();
+
+                if (createResponse.ok) {
+                  console.log(
+                    "User created in CometChat, attempting login again..."
+                  );
+
+                  // Try to login again after user creation
+                  const user = await CometChatUIKit.login(uid!);
+                  console.log(
+                    "CometChat login successful after user creation:",
+                    {
+                      uid: user.getUid?.(),
+                      name: user.getName?.() || "Unknown",
+                    }
+                  );
+                  setIsLoggedIn(true);
+                  return;
+                } else {
+                  console.error(
+                    "Failed to create user in CometChat:",
+                    createData
+                  );
+                }
+              } catch (createError) {
+                console.error("Error creating user in CometChat:", createError);
+              }
+
               setError(
-                "User account setup incomplete. Please contact support or try signing up again."
+                "Account setup incomplete. Please try refreshing the page or contact support if the problem persists."
               );
             } else {
               setError(
@@ -201,14 +268,28 @@ const CometChatNoSSR: React.FC = () => {
   if (!isInitialized || !isLoggedIn) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center">
+        <div className="text-center max-w-md mx-auto px-4">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 mb-2">
-            {!isInitialized ? "Initializing chat..." : "Connecting..."}
+          <p className="text-gray-700 mb-2 font-medium">
+            {!isInitialized ? "Initializing chat..." : "Connecting to chat..."}
           </p>
           {currentUID && (
-            <p className="text-xs text-gray-500">User: {currentUID}</p>
+            <p className="text-xs text-gray-500 mb-4">User: {currentUID}</p>
           )}
+          {error && (
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-700 text-sm mb-2">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="text-red-600 hover:text-red-800 text-sm underline"
+              >
+                Refresh Page
+              </button>
+            </div>
+          )}
+          <p className="text-xs text-gray-400 mt-6">
+            This may take a few moments on first login...
+          </p>
         </div>
       </div>
     );

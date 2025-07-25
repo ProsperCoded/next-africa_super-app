@@ -224,11 +224,50 @@ const CometChatSelector = (props: SelectorProps) => {
       .then(() => {
         setLoggedInUser(null);
         setAppState({ type: "resetAppState" });
+
+        // Trigger cross-tab logout event first (before clearing storage)
+        localStorage.setItem("logout-trigger", Date.now().toString());
+
+        // Clear ALL localStorage items related to user session
         localStorage.removeItem("userCredentials");
+        localStorage.removeItem("currentUser");
         localStorage.removeItem("user");
+
+        // Clear any sessionStorage items as well
+        sessionStorage.removeItem("signupData");
+        sessionStorage.removeItem("otpData");
+
+        // Clear all localStorage to ensure complete logout
+        // This ensures no residual data remains that could cause issues
+        try {
+          localStorage.clear();
+        } catch (error) {
+          console.warn("Could not clear localStorage:", error);
+        }
+
+        // Force reload to ensure all state is reset
+        window.location.href = "/auth/welcome";
       })
       .catch((error) => {
-        console.error("error", error);
+        console.error("Logout error:", error);
+        // Even if CometChat logout fails, still clear local storage
+        // Trigger cross-tab logout event first
+        localStorage.setItem("logout-trigger", Date.now().toString());
+
+        localStorage.removeItem("userCredentials");
+        localStorage.removeItem("currentUser");
+        localStorage.removeItem("user");
+        sessionStorage.removeItem("signupData");
+        sessionStorage.removeItem("otpData");
+
+        try {
+          localStorage.clear();
+        } catch (clearError) {
+          console.warn("Could not clear localStorage:", clearError);
+        }
+
+        // Force redirect even on error
+        window.location.href = "/auth/welcome";
       });
   };
 
