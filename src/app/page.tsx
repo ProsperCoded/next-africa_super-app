@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { checkAuthState, AuthState } from "./utils/auth";
 import CometChatAppWrapper from "./CometChatAppWrapper";
+import LoadingScreen from "./components/LoadingScreen";
 
 export default function Home() {
   const router = useRouter();
@@ -43,16 +44,9 @@ export default function Home() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, [router]);
 
-  // Show loading spinner while checking auth
+  // Show loading screen while checking auth
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading NEXT...</p>
-        </div>
-      </div>
-    );
+    return <LoadingScreen message="Initializing NEXT..." />;
   }
 
   // If not authenticated, will redirect to auth in useEffect
