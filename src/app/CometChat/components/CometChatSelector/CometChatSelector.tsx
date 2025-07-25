@@ -274,9 +274,7 @@ const CometChatSelector = (props: SelectorProps) => {
   const conversationsHeaderView = () => {
     return (
       <div className="cometchat-conversations-header">
-        <div className="cometchat-conversations-header__title">
-          {getLocalizedString("chats")}
-        </div>
+        <img src="/assets/logo-light.png" alt="NEXT" style={{ height: "32px" }} />
         <div className="cometchat-conversations-header__actions">
           {/* Prominent Start Chat Button */}
           <CometChatButton
@@ -284,7 +282,6 @@ const CometChatSelector = (props: SelectorProps) => {
               onNewChatClicked();
             }}
             iconURL={chatIcon}
-            text="New"
           />
 
           {/* Custom Options Menu */}

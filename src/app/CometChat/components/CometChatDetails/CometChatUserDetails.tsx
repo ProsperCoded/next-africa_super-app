@@ -35,7 +35,8 @@ export const CometChatUserDetails = (props: UserDetailProps) => {
           <div className="cometchat-user-details__content-title">{user.getName()}</div>
           {showStatus && chatFeatures.coreMessagingExperience.userAndFriendsPresence && (
             <div className="cometchat-user-details__content-description">
-              {getLocalizedString('message_header_status_' + user.getStatus?.())}
+              <span className={`cometchat-status-indicator cometchat-status-indicator--${user.getStatus?.()}`}></span>
+              <span>{getLocalizedString('message_header_status_' + user.getStatus?.())}</span>
             </div>
           )}
         </div>
