@@ -77,8 +77,6 @@ input,
 textarea,
 select {
   color: var(--text-primary) !important;
-  background-color: var(--bg-primary) !important;
-  border: 1px solid var(--border-medium) !important;
   border-radius: 8px;
   transition: all 0.2s ease;
   -webkit-text-fill-color: var(--text-primary) !important;
@@ -102,11 +100,9 @@ textarea::placeholder {
 .cometchat-add-contact-overlay input,
 .cometchat-find-groups-modal input,
 .cometchat-group-add-members-modal input,
-div input,
 [class*="cometchat"] input {
   color: var(--text-primary) !important;
   -webkit-text-fill-color: var(--text-primary) !important;
-  background-color: var(--bg-primary) !important;
 }
 
 [class*="cometchat"] input::placeholder {
