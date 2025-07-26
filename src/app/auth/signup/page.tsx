@@ -165,7 +165,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 flex flex-col">
+    <div className="min-h-screen via-white to-blue-50 flex flex-col">
       {/* Header */}
       <div className="flex-shrink-0 px-4 py-6 sm:px-6 sm:py-8">
         <div className="text-center">
@@ -292,7 +292,7 @@ export default function Signup() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-green-600 hover:to-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="w-full bg-[#05F04B] text-black py-4 px-6 rounded-xl font-semibold hover:from-green-600 hover:to-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center">

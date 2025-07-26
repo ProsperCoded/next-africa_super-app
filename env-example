@@ -1,9 +1,0 @@
-NEXT_PUBLIC_COMETCHAT_APP_ID=your_app_id
-NEXT_PUBLIC_COMETCHAT_REGION=us
-NEXT_PUBLIC_COMETCHAT_AUTH_KEY=your_auth_key
-COMETCHAT_API_KEY=your_api_key
-NEXT_PRIVATE_BREVO_API_KEY=your_brevo_key
-
-# Turso Database Configuration
-TURSO_DATABASE_URL=libsql://your-database-url.turso.io
-TURSO_AUTH_TOKEN=your_turso_auth_token

@@ -8,19 +8,21 @@ export default function Welcome() {
   const [activeTab, setActiveTab] = useState<"signup" | "login">("signup");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
+    <div className="min-h-screen  flex items-center justify-center p-4">
       <div className="max-w-md w-full space-y-8">
         {/* Logo and branding */}
         <div className="text-center">
-          <div className="mx-auto w-24 h-24 relative mb-4">
+          <div className="mx-auto bg-[#06023B] rounded-full w-32 h-32 relative flex justify-center mb-4">
             <Image
               src="/assets/logo-light.png"
-              alt="NEXT Logo"
-              fill
-              className="object-contain"
+              alt="AFRIXA Logo"
+              width={50}
+              height={50}
+              // fill
+              className="object-contain "
             />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">NEXT</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">AFRIXA</h1>
           <p className="text-lg text-gray-600 mb-2">Africa's Super-App</p>
           <p className="text-sm text-gray-500">
             Secure messaging, voice & video calling, and more
@@ -80,7 +82,7 @@ export default function Welcome() {
 
               <Link
                 href="/auth/signup"
-                className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center justify-center"
+                className="w-full bg-[#05F04B] text-black py-3 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center justify-center"
               >
                 Get Started
               </Link>
@@ -103,7 +105,7 @@ export default function Welcome() {
 
               <Link
                 href="/auth/login"
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center"
+                className="w-full bg-[#05F04B] text-black py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center"
               >
                 Sign In
               </Link>
