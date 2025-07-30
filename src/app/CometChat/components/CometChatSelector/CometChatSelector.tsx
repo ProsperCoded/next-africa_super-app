@@ -274,9 +274,7 @@ const CometChatSelector = (props: SelectorProps) => {
   const conversationsHeaderView = () => {
     return (
       <div className="cometchat-conversations-header">
-        <div className="cometchat-conversations-header__title">
-          {getLocalizedString("chats")}
-        </div>
+        <img src="/assets/logo-light.png" alt="NEXT" style={{ height: "32px" }} />
         <div className="cometchat-conversations-header__actions">
 
           {/* Custom Options Menu */}
