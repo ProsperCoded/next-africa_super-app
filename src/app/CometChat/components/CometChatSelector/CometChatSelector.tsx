@@ -274,7 +274,7 @@ const CometChatSelector = (props: SelectorProps) => {
   const conversationsHeaderView = () => {
     return (
       <div className="cometchat-conversations-header">
-        <img src="/assets/logo-light.png" alt="NEXT" style={{ height: "32px" }} />
+        <img src="/assets/logo-dark.png" alt="NEXT" style={{ height: "32px" }} />
         <div className="cometchat-conversations-header__actions">
 
           {/* Custom Options Menu */}
@@ -284,25 +284,24 @@ const CometChatSelector = (props: SelectorProps) => {
               style={{
                 width: "32px",
                 height: "32px",
-                background: "var(--color-primary)",
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                color: "white",
               }}
             >
               <svg
                 width="16"
-                height="16"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
+                stroke="#06023B"
+                strokeWidth={4}
               >
+                <circle cx="12" cy="24" r="1" />
                 <circle cx="12" cy="12" r="1" />
-                <circle cx="12" cy="5" r="1" />
-                <circle cx="12" cy="19" r="1" />
+                <circle cx="12" cy="0" r="1" />
               </svg>
             </div>
 
