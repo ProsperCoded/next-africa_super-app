@@ -1881,12 +1881,12 @@ function CometChatHome({ defaultUser, defaultGroup }: CometChatHomeProps) {
         activeTab === "chats"
           ? (e as Conversation)
           : activeTab === "users"
-          ? (e as User)
-          : activeTab === "groups"
-          ? (e as Group)
-          : activeTab === "calls"
-          ? (e as Call)
-          : undefined
+            ? (e as User)
+            : activeTab === "groups"
+              ? (e as Group)
+              : activeTab === "calls"
+                ? (e as Call)
+                : undefined
       );
     }
   };
@@ -2159,8 +2159,10 @@ function CometChatHome({ defaultUser, defaultGroup }: CometChatHomeProps) {
                 hideCreateGroupButton={
                   chatFeatures && !chatFeatures.groupManagement.createGroup
                 }
+                
               />
             }
+
           </div>
           <TabComponent />
         </div>
@@ -2187,18 +2189,7 @@ function CometChatHome({ defaultUser, defaultGroup }: CometChatHomeProps) {
           onGroupJoined={handleGroupJoined}
         />
 
-        {/* Floating Action Button */}
-        <FloatingActionButton
-          onAddContact={onAddContactClicked}
-          onFindGroups={onFindGroupsClicked}
-          onStartConversation={() => {
-            setShowNewChat(true);
-            setAppState({
-              type: "updateSideComponent",
-              payload: { type: "", visible: false },
-            });
-          }}
-        />
+
       </div>
     )
   );

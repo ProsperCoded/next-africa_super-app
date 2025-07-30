@@ -2,6 +2,7 @@ import {
   CometChatMessageComposer,
   CometChatMessageHeader,
   CometChatMessageList,
+  // CometChatButton,
   getLocalizedString,
   CometChatUserEvents,
 } from '@cometchat/chat-uikit-react';
@@ -85,13 +86,13 @@ export const CometChatMessages = (props: MessagesViewProps) => {
           group={group}
           auxiliaryButtonView={determineUserOrGroupInfoVisibility()}
           onBack={onBack}
-          hideVideoCallButton={true}
-          hideVoiceCallButton={true}
+          hideVideoCallButton={determineVideoCallVisibility()}
+          hideVoiceCallButton={determineVoiceCallVisibility()}
           showConversationSummaryButton={chatFeatures && chatFeatures?.aiUserCopilot?.conversationSummary}
           hideUserStatus={chatFeatures && !chatFeatures?.coreMessagingExperience?.userAndFriendsPresence}
           showBackButton={(layoutFeatures && layoutFeatures.withSideBar) || isMobile}
         />
-        <div className="cometchat-dashboard-actions">
+        {/* <div className="cometchat-dashboard-actions">
           <CometChatButton
             iconURL="call.svg"
             onClick={() => {
@@ -104,7 +105,7 @@ export const CometChatMessages = (props: MessagesViewProps) => {
               // TODO: Implement video call functionality
             }}
           />
-        </div>
+        </div> */}
       </div>
       <div className="cometchat-message-list-wrapper">
         <CometChatMessageList
