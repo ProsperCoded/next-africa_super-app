@@ -111,31 +111,21 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       {/* Header */}
       <div className="flex-shrink-0 px-4 py-6 sm:px-6 sm:py-8">
         <div className="text-center">
-          <div className="mx-auto mb-6">
-            <Image
-              src="/assets/logo-name.png"
-              alt="NEXT"
-              width={120}
-              height={48}
-              className="h-12 w-auto object-contain mx-auto"
-              priority
-            />
-          </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-3 sm:text-4xl">
             Welcome Back
           </h1>
-          <p className="text-gray-600 text-lg">Sign in to your NEXT account</p>
+          <p className="text-gray-600 text-lg">Sign in to your account</p>
         </div>
       </div>
 
       {/* Form Container */}
       <div className="flex-1 flex items-start justify-center px-4 pb-8">
         <div className="w-full max-w-md">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 sm:p-8">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 p-6 sm:p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
@@ -252,7 +242,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="w-full bg-[#05F04B] text-black  py-4 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center">

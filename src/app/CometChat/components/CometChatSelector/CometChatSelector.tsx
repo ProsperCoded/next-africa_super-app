@@ -35,7 +35,7 @@ import {
 import { AppContext } from "../../context/AppContext";
 import { useCometChatContext } from "../../context/CometChatContext";
 import { CallLog } from "@cometchat/calls-sdk-javascript";
-
+import { FloatingActionButton } from "@/app/components/ui/FloatingActionButton";
 interface SelectorProps {
   group?: Group;
   showJoinGroup?: boolean;
@@ -278,14 +278,6 @@ const CometChatSelector = (props: SelectorProps) => {
           {getLocalizedString("chats")}
         </div>
         <div className="cometchat-conversations-header__actions">
-          {/* Prominent Start Chat Button */}
-          <CometChatButton
-            onClick={() => {
-              onNewChatClicked();
-            }}
-            iconURL={chatIcon}
-            text="New"
-          />
 
           {/* Custom Options Menu */}
           <div style={{ position: "relative" }}>
@@ -438,6 +430,19 @@ const CometChatSelector = (props: SelectorProps) => {
 
   return (
     <>
+      <div className="w-full h-full relative">
+      <FloatingActionButton
+        onAddContact={onAddContactClicked}
+        onFindGroups={onFindGroupsClicked}
+        onStartConversation={() => {
+          onNewChatClicked();
+          setAppState({
+            type: "updateSideComponent",
+            payload: { type: "", visible: false },
+          });
+        }}
+      />        
+
       {loggedInUser && (
         <>
           {showJoinGroup && group && (
@@ -501,6 +506,7 @@ const CometChatSelector = (props: SelectorProps) => {
           )}
         </>
       )}
+            </div>
     </>
   );
 };

@@ -24,7 +24,7 @@ export const FloatingActionButton: React.FC<FloatingActionMenuProps> = ({
   };
 
   return (
-    <div className={cn("fixed bottom-6 right-6 z-50", className)}>
+    <div className={cn("absolute bottom-6 right-6 z-50", className)}>
       {/* Action Menu */}
       {isOpen && (
         <div className="absolute bottom-16 right-0 bg-white rounded-lg shadow-lg py-2 min-w-[200px] animate-slide-up">
@@ -32,7 +32,7 @@ export const FloatingActionButton: React.FC<FloatingActionMenuProps> = ({
             onClick={() => handleAction(onStartConversation)}
             className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 text-sm font-medium text-gray-700"
           >
-            <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#06023B] rounded-full flex items-center justify-center">
               <svg
                 className="w-4 h-4 text-white"
                 fill="none"
@@ -54,7 +54,7 @@ export const FloatingActionButton: React.FC<FloatingActionMenuProps> = ({
             onClick={() => handleAction(onAddContact)}
             className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 text-sm font-medium text-gray-700"
           >
-            <div className="w-8 h-8 bg-secondary-900 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#06023B] rounded-full flex items-center justify-center">
               <svg
                 className="w-4 h-4 text-white"
                 fill="none"
@@ -76,7 +76,7 @@ export const FloatingActionButton: React.FC<FloatingActionMenuProps> = ({
             onClick={() => handleAction(onFindGroups)}
             className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 text-sm font-medium text-gray-700"
           >
-            <div className="w-8 h-8 bg-success-500 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#06023B] rounded-full flex items-center justify-center">
               <svg
                 className="w-4 h-4 text-white"
                 fill="none"
@@ -100,10 +100,9 @@ export const FloatingActionButton: React.FC<FloatingActionMenuProps> = ({
       <button
         onClick={toggleMenu}
         className={cn(
-          "w-14 h-14 bg-primary-500 hover:bg-primary-600 text-white rounded-full shadow-lg",
+          "w-14 h-14 bg-[#05F04B] hover:bg-primary-600 text-white rounded-full shadow-lg",
           "flex items-center justify-center transition-all duration-200",
-          "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
-          isOpen && "rotate-45"
+          "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#06023B] focus:ring-offset-2",
         )}
       >
         <svg
@@ -112,13 +111,13 @@ export const FloatingActionButton: React.FC<FloatingActionMenuProps> = ({
             isOpen && "rotate-45"
           )}
           fill="none"
-          stroke="currentColor"
+          stroke="#06023B"
           viewBox="0 0 24 24"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
+            strokeWidth={3}
             d="M12 4v16m8-8H4"
           />
         </svg>
