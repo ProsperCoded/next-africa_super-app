@@ -85,12 +85,26 @@ export const CometChatMessages = (props: MessagesViewProps) => {
           group={group}
           auxiliaryButtonView={determineUserOrGroupInfoVisibility()}
           onBack={onBack}
-          hideVideoCallButton={determineVideoCallVisibility()}
-          hideVoiceCallButton={determineVoiceCallVisibility()}
+          hideVideoCallButton={true}
+          hideVoiceCallButton={true}
           showConversationSummaryButton={chatFeatures && chatFeatures?.aiUserCopilot?.conversationSummary}
           hideUserStatus={chatFeatures && !chatFeatures?.coreMessagingExperience?.userAndFriendsPresence}
           showBackButton={(layoutFeatures && layoutFeatures.withSideBar) || isMobile}
         />
+        <div className="cometchat-dashboard-actions">
+          <CometChatButton
+            iconURL="call.svg"
+            onClick={() => {
+              // TODO: Implement call functionality
+            }}
+          />
+          <CometChatButton
+            iconURL="video-call.svg"
+            onClick={() => {
+              // TODO: Implement video call functionality
+            }}
+          />
+        </div>
       </div>
       <div className="cometchat-message-list-wrapper">
         <CometChatMessageList
