@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
-
-// Initialize Resend with API key
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Generate 6-digit OTP
 function generateOTP(): string {
@@ -71,31 +67,59 @@ export async function POST(request: NextRequest) {
     // Generate OTP
     const otp = generateOTP();
 
-    // Send email via Resend
-    const result = await resend.emails.send({
-      from: "NEXT <onboarding@resend.dev>", // You can verify your own domain for custom sender
-      to: email,
+    // Send email via Brevo
+    const brevoApiKey = process.env.NEXT_PRIVATE_BREVO_API_KEY;
+
+    if (!brevoApiKey) {
+      return NextResponse.json(
+        { error: "Email service not configured" },
+        { status: 500 }
+      );
+    }
+
+    const emailData = {
+      sender: {
+        name: "NEXT - Africa's Super-App",
+        email: "enweremproper@gmail.com",
+      },
+      to: [
+        {
+          email: email,
+          name: name || "User",
+        },
+      ],
       subject: `Your NEXT verification code: ${otp}`,
-      html: generateOTPEmailTemplate(otp, name),
+      htmlContent: generateOTPEmailTemplate(otp, name),
+    };
+
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": brevoApiKey,
+      },
+      body: JSON.stringify(emailData),
     });
 
-    if (result.error) {
-      console.error("Resend API error:", result.error);
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Brevo API error:", errorData);
       return NextResponse.json(
         { error: "Failed to send OTP email" },
         { status: 500 }
       );
     }
 
-    console.log(`OTP sent to ${email}: ${otp}`);
+    console.log(`OTP sent to ${email}: ${otp}`); // For development
 
+    // Return OTP to client for MVP (lazy solution)
     return NextResponse.json({
       success: true,
       message: "OTP sent successfully",
-      otp: otp,
+      otp: otp, // Send OTP to client
       expiresIn: 600, // 10 minutes
       generatedAt: Date.now(),
-      phone: phone,
+      phone: phone, // Include phone for later use
     });
   } catch (error) {
     console.error("Send OTP error:", error);
