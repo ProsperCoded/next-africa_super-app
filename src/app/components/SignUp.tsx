@@ -16,10 +16,7 @@ const countries = [
   { name: "United States", code: "+1", flag: "🇺🇸", digits: 10, format: "XXX XXX XXXX" },
   { name: "United Kingdom", code: "+44", flag: "🇬🇧", digits: 10, format: "XX XXXX XXXX" },
   { name: "Canada", code: "+1", flag: "🇨🇦", digits: 10, format: "XXX XXX XXXX" },
-  { name: "India", code: "+91", flag: "🇮🇳", digits: 10, format: "XXXXX XXXXX" },
-  { name: "France", code: "+33", flag: "🇫🇷", digits: 9, format: "X XX XX XX XX" },
-  { name: "Germany", code: "+49", flag: "🇩🇪", digits: 11, format: "XXX XXXXXXXX" },
-];
+  ];
 
 interface PhoneInputProps {
   formData: {
@@ -124,7 +121,7 @@ function ImprovedPhoneInput({ formData, onChange, onCountryChange, error }: Phon
           <button
             type="button"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center h-full px-3 py-3 hover:bg-gray-50 transition-colors focus:outline-none focus:bg-gray-50 rounded-l-xl"
+            className="flex items-center h-full px-2 py-2 hover:bg-gray-50 transition-colors focus:outline-none focus:bg-gray-50 rounded-l-xl"
           >
             <span className="text-lg mr-2">{currentCountry.flag}</span>
             <svg
@@ -179,7 +176,7 @@ function ImprovedPhoneInput({ formData, onChange, onCountryChange, error }: Phon
           type="text"
           value={formData.countryCode}
           onChange={handleCountryCodeChange}
-          className="w-20 px-3 py-3 border-r border-gray-200 bg-transparent focus:outline-none text-center text-sm font-medium"
+          className="w-20 px-2 py-2 border-r border-gray-200 bg-transparent focus:outline-none text-center text-sm font-medium"
           placeholder="+234"
           maxLength={5}
         />
@@ -370,19 +367,10 @@ export default function Signup() {
 
   return (
     <div className=" flex flex-col">
-      {/* Header */}
-      {/* <div className="flex-shrink-0 px-4 py-6 sm:px-6 sm:py-8">
-        <div className="text-center">
-          <div className="mx-auto mb-6">
-
-          </div>
-        </div>
-      </div> */}
-
       {/* Form */}
-      <div className="flex-1 flex items-start justify-center px-4 pb-8">
+      <div className="flex-1 flex items-start justify-center px-3 pb-8">
         <div className="w-full max-w-md">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 sm:p-8">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 sm:p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">

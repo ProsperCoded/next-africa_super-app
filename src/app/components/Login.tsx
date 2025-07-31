@@ -123,9 +123,9 @@ export default function Login() {
       </div>
 
       {/* Form Container */}
-      <div className="flex-1 flex items-start justify-center px-4 pb-8">
+      <div className="flex-1 flex items-start justify-center px-2 pb-8">
         <div className="w-full max-w-md">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 p-6 sm:p-8">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 sm:p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">

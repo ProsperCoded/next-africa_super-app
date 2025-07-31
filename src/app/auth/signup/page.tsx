@@ -7,8 +7,8 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState<"signup" | "login">("signup");
 
   return (
-    <div className="w-full max-w-md mx-auto p-4">
-      <div>
+    <div className="w-full max-w-md mx-auto p-2">
+      <div >
         <Image
           src="/assets/logo-name.svg"
           alt="AFRIXA"
