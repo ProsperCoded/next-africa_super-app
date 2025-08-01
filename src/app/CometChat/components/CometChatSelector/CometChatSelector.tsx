@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import ContactsWithSearch from "./ContactsWithSearch";
 import chatIcon from "../../assets/start-chat.svg";
 import createGroupIcon from "../../assets/create-group.svg";
 import logoutIcon from "../../assets/logout.svg";
@@ -15,6 +16,7 @@ import {
   Conversation,
   Group,
   User,
+  CometChat,
 } from "@cometchat/chat-sdk-javascript";
 import "../../styles/CometChatSelector/CometChatSelector.css";
 import { CometChatJoinGroup } from "../CometChatJoinGroup/CometChatJoinGroup";
@@ -32,6 +34,7 @@ import {
   CometChatContextMenu,
   Placement,
 } from "@cometchat/chat-uikit-react";
+
 import { AppContext } from "../../context/AppContext";
 import { useCometChatContext } from "../../context/CometChatContext";
 import { CallLog } from "@cometchat/calls-sdk-javascript";
@@ -474,16 +477,7 @@ const CometChatSelector = (props: SelectorProps) => {
               }}
             />
           ) : activeTab === "users" ? (
-            <CometChatUsers
-              activeUser={activeItem as User}
-              onItemClick={(e) => {
-                onSelectorItemClicked(e, "updateSelectedItemUser");
-              }}
-              hideUserStatus={
-                chatFeatures &&
-                !chatFeatures?.coreMessagingExperience?.userAndFriendsPresence
-              }
-            />
+            <ContactsWithSearch/>
           ) : activeTab === "groups" ? (
             <CometChatGroups
               activeGroup={activeItem as Group}
