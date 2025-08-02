@@ -12,6 +12,7 @@ import { CometChatUIKit } from "@cometchat/chat-uikit-react";
 import "@cometchat/chat-uikit-react/css-variables.css";
 import LogoutButton from "../components/LogoutButton";
 import { getCurrentUser } from "../utils/auth";
+import LoadingScreen from "../components/LoadingScreen";
 
 interface CometChatHomeProps {
   /** Default user for the chat application (optional). */
@@ -22,12 +23,7 @@ interface CometChatHomeProps {
 
 function LoginPlaceholder() {
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500 mx-auto mb-4"></div>
-        <p className="text-text-secondary">Connecting to chat...</p>
-      </div>
-    </div>
+    <LoadingScreen/>
   );
 }
 

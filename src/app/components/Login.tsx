@@ -5,7 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export default function Login() {
+export default function Login({ setActive }: { setActive: (tab: "signup" | "login") => void }) {
+    const goToSignUp = () => {
+    setActive("signup");
+  };
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -274,16 +277,14 @@ export default function Login() {
               </button>
             </form>
 
-            <div className="mt-8 text-center">
-              <span className="text-gray-500 text-sm">
+            <div  className="mt-8 text-center">
+              <span className="text-gray-500 text-sm ">
                 Don't have an account?{" "}
               </span>
-              <Link
-                href="/auth/signup"
-                className="text-green-600 text-sm font-semibold hover:text-green-700 transition-colors"
-              >
+              <div onClick={goToSignUp} className="text-green-600 text-sm font-semibold hover:text-green-700 transition-colors">
                 Sign up
-              </Link>
+              </div>
+
             </div>
           </div>
 

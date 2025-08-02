@@ -235,7 +235,11 @@ interface FormData {
   phone: string;
 }
 
-export default function Signup() {
+export default function Signup({ setActive }: { setActive: (tab: "signup" | "login") => void }) {
+  const goToSignin = () => {
+    setActive("login");
+  };
+
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
@@ -376,13 +380,8 @@ export default function Signup() {
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
                   {error}
                   {emailExists && (
-                    <div className="mt-2">
-                      <Link
-                        href="/auth/login"
-                        className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
-                      >
+                    <div onClick={goToSignin} className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
                         Sign in instead →
-                      </Link>
                     </div>
                   )}
                 </div>
@@ -486,11 +485,11 @@ export default function Signup() {
               </button>
             </form>
 
-            <div className="mt-8 text-center">
+            <div className="mt-8 text-center ">
               <span className="text-gray-500 text-sm">Already have an account? </span>
-              <Link href="/auth/login" className="text-green-600 text-sm font-semibold hover:text-green-700 transition-colors">
+                <div onClick={goToSignin} className="text-green-600 text-sm font-semibold hover:text-green-700 cursor-pointer transition-colors">
                 Sign in
-              </Link>
+                </div>
             </div>
           </div>
 
