@@ -67,7 +67,11 @@
   border-radius: var(--cometchat-radius-2, 8px);
   background: var(--cometchat-background-color-01, #fff);
 }
-
+.cometchat-avatar,
+.cometchat-users-list__avatar,
+.cometchat-conversations-list__avatar {
+  background-color: #06023B !important; /* Your desired color */
+}
 .join-group-password__content-avatar .cometchat-avatar {
   width: 60px;
   height: 60px;

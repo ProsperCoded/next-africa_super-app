@@ -5,7 +5,9 @@ import Login from "@/app/components/Login";
 import Image from "next/image";
 export default function Page() {
   const [activeTab, setActiveTab] = useState<"signup" | "login">("signup");
-
+  const handleSetActive = (tab: "signup" | "login") => {
+    setActiveTab(tab);
+  };
   return (
     <div className="w-full max-w-md mx-auto p-2">
       <div >
@@ -46,7 +48,7 @@ export default function Page() {
       </div>
 
       {/* Content */}
-      <div>{activeTab === "signup" ? <SignUp /> : <Login />}</div>
+      <div>{activeTab === "signup" ? <SignUp setActive = {handleSetActive} /> : <Login setActive = {handleSetActive} />}</div>
     </div>
   );
 }

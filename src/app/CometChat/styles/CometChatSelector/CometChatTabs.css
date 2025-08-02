@@ -54,9 +54,9 @@
 }
 
 .cometchat-tab-component__tab-icon-active {
-    background: var(--cometchat-icon-color-highlight);
+    background: #06023B;
 }
 
 .cometchat-tab-component__tab-text-active {
-    color: var(--cometchat-text-color-highlight);
+    color: #06023B;
 }
